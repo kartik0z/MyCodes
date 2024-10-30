@@ -44,17 +44,24 @@ function generateBill() {
 
     document.getElementById("bill-customer-name").innerText = customerName;
     document.getElementById("bill-customer-contact").innerText = customerContact;
-    document.getElementById("bill-details").innerText = `Total Cost for Gold/Silver as specified: ₹${totalCost.toFixed(2)}`;
+    document.getElementById("bill-details").innerHTML = `
+        <div class="bill-details">
+            <p>Item:</p>
+            <p>Gold/Silver as specified</p>
+        </div>
+        <div class="bill-details">
+            <p>Rate:</p>
+            <p>₹${(totalCost / document.getElementById("silver-quantity").value).toFixed(2)} per unit</p>
+        </div>
+        <div class="bill-details">
+            <p>Quantity:</p>
+            <p>${document.getElementById("silver-quantity").value}</p>
+        </div>
+    `;
     document.getElementById("bill-total-cost").innerText = totalCost.toFixed(2);
     document.getElementById("bill").style.display = "block";
 }
 
 function printBill() {
-    const billContent = document.getElementById("bill").innerHTML;
-    const printWindow = window.open('', '', 'height=600,width=800');
-    printWindow.document.write('<html><head><title>Invoice</title></head><body>');
-    printWindow.document.write(billContent);
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
-    printWindow.print();
+    window.print();
 }

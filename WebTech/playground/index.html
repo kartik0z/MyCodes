@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gold & Silver Rate Calculator</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -61,11 +61,17 @@
             <p><strong>Customer Name:</strong> <span id="bill-customer-name"></span></p>
             <p><strong>Contact No.:</strong> <span id="bill-customer-contact"></span></p>
             <hr>
-            <p id="bill-details"></p>
+            <div id="bill-details"></div>
             <p><strong>Total Cost:</strong> ₹<span id="bill-total-cost"></span></p>
             <hr>
-            <p>Authorized Signature: ____________________</p>
-            <p>Customer Signature: ____________________</p>
+            <div class="signature-area">
+                <div>
+                    <p>Authorized Signature</p>
+                </div>
+                <div>
+                    <p>Customer Signature</p>
+                </div>
+            </div>
             <button onclick="printBill()">Print Bill</button>
         </div>
     </div>
