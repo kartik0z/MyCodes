@@ -1,221 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gold & Silver Rate Calculator</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js for graphs -->
+    <title>Billing Systems</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
+
 <body>
     <div class="container">
-        <h1>Gold & Silver Rate Calculator</h1>
-
-        <!-- Customer Information -->
-        <div class="section">
-            <h2>Customer Information</h2>
-            <label for="customer-name">Name:</label>
-            <input type="text" id="customer-name" placeholder="Customer Name" required>
-
-            <label for="customer-contact">Contact No.:</label>
-            <input type="text" id="customer-contact" placeholder="Contact Number" required>
-        </div>
-
-        <!-- Silver Rate Calculator -->
-        <div class="section">
-            <h2>Silver Rate Calculator</h2>
-            <label for="silver-weight">Weight (grams):</label>
-            <input type="number" id="silver-weight" placeholder="e.g., 100" required>
-            
-            <label for="silver-purity">Silver Purity (%):</label>
-            <input type="number" id="silver-purity" placeholder="e.g., 99.9" required>
-            
-            <label for="silver-quantity">Quantity:</label>
-            <input type="number" id="silver-quantity" placeholder="e.g., 2" required>
-            
-            <button onclick="calculateRate('silver')">Calculate Silver Rate</button>
-            <p id="silver-result" class="result"></p>
-        </div>
-
-        <!-- Gold Rate Calculator -->
-        <div class="section">
-            <h2>Gold Rate Calculator</h2>
-            <label for="gold-weight">Weight (grams):</label>
-            <input type="number" id="gold-weight" placeholder="e.g., 10" required>
-            
-            <label for="gold-purity">Gold Purity (%):</label>
-            <input type="number" id="gold-purity" placeholder="e.g., 99.9" required>
-            
-            <label for="gold-quantity">Quantity:</label>
-            <input type="number" id="gold-quantity" placeholder="e.g., 1" required>
-            
-            <button onclick="calculateRate('gold')">Calculate Gold Rate</button>
-            <p id="gold-result" class="result"></p>
-        </div>
-
-        <!-- Currency Converter -->
-        <div class="section">
-            <h2>Currency Converter</h2>
-            <label for="amount">Amount:</label>
-            <input type="number" id="amount" placeholder="Amount in INR" required>
-            <label for="currency">Convert to:</label>
-            <select id="currency">
-                <option value="usd">USD</option>
-                <option value="eur">EUR</option>
-            </select>
-            <button onclick="convertCurrency()">Convert</button>
-            <p id="conversion-result"></p>
-        </div>
-
-        <!-- Rate History Graph -->
-        <div class="section">
-            <h2>Rate History</h2>
-            <canvas id="rateHistoryChart" width="400" height="200"></canvas>
-        </div>
-
-        <!-- FAQ Section -->
-        <div class="section">
-            <h2>Frequently Asked Questions</h2>
-            <p><strong>Q: What is the purity of gold/silver?</strong></p>
-            <p>A: Purity is a measure of the content of pure metal in an alloy, expressed in percentage.</p>
-            <p><strong>Q: How is GST applied on gold and silver purchases?</strong></p>
-            <p>A: A GST of 3% is levied on gold and silver purchases.</p>
-        </div>
-
-        <!-- Contact Form -->
-        <div class="section">
-            <h2>Contact Us</h2>
-            <label for="contact-name">Name:</label>
-            <input type="text" id="contact-name" placeholder="Your Name" required>
-            <label for="contact-email">Email:</label>
-            <input type="email" id="contact-email" placeholder="Your Email" required>
-            <label for="contact-message">Message:</label>
-            <textarea id="contact-message" placeholder="Your Message" required></textarea>
-            <button onclick="sendMessage()">Send Message</button>
-        </div>
-
-        <!-- Print Bill Button -->
-        <button onclick="generateBill()">Generate Bill</button>
-
-        <!-- Bill Template -->
-        <div id="bill" class="bill" style="display: none;">
-            <h2>Invoice</h2>
-            <p><strong>Customer Name:</strong> <span id="bill-customer-name"></span></p>
-            <p><strong>Contact No.:</strong> <span id="bill-customer-contact"></span></p>
-            <hr>
-            <div id="bill-details"></div>
-            <p><strong>Total Cost:</strong> ₹<span id="bill-total-cost"></span></p>
-            <hr>
-            <div class="signature-area">
-                <div>
-                    <p>Authorized Signature</p>
-                </div>
-                <div>
-                    <p>Customer Signature</p>
-                </div>
+        <h1>Billing System</h1>
+        <div class="add-item">
+            <h2>Add Item</h2>
+            <div class="input-group">
+                <input type="text" id="item-name" placeholder="Item name">
+                <input type="number" id="item-price" placeholder="Item price">
+                <input type="number" id="item-quantity" placeholder="Item quantity">
+                <button onclick="addItem()">Add</button>
             </div>
-            <button onclick="printBill()">Print Bill</button>
+        </div>
+        <div class="items">
+            <h2>Items</h2>  
+            <ul id="item-list"></ul>
+        </div>
+        <div class="total">
+            <button onclick="calculateTotal()">Calculate Total</button>
+            <p id="total-price"></p>
+        </div>
+        <div class="invoice">
+            <h2>Invoice</h2>
+            <ul id="invoice-list"></ul>
+            <button onclick="generateInvoice()">Generate Invoice</button>
         </div>
     </div>
 
     <script src="script.js"></script>
-    <script>
-        // Actual historical data for gold and silver rates in INR
-        const labels = ['Jan 2023', 'Feb 2023', 'Mar 2023', 'Apr 2023', 'May 2023', 'Jun 2023', 'Jul 2023', 'Aug 2023', 'Sep 2023', 'Oct 2023'];
-        const goldRates = [5000, 5100, 5250, 5400, 5500, 5700, 5800, 5900, 6000, 6100];
-        const silverRates = [80, 85, 87, 90, 92, 95, 97, 100, 102, 105];
-
-        const ctx = document.getElementById('rateHistoryChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: 'Gold Rate (INR/g)',
-                        data: goldRates,
-                        borderColor: 'gold',
-                        backgroundColor: 'rgba(255, 215, 0, 0.2)',
-                        fill: true,
-                    },
-                    {
-                        label: 'Silver Rate (INR/g)',
-                        data: silverRates,
-                        borderColor: 'silver',
-                        backgroundColor: 'rgba(192, 192, 192, 0.2)',
-                        fill: true,
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Rate (INR/g)'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Months'
-                        }
-                    }
-                }
-            }
-        });
-
-        function convertCurrency() {
-            const amount = parseFloat(document.getElementById("amount").value);
-            const currency = document.getElementById("currency").value;
-            let conversionRate = currency === "usd" ? 0.012 : 0.011; // Example conversion rates
-            const convertedAmount = (amount * conversionRate).toFixed(2);
-            document.getElementById("conversion-result").innerText = `Converted Amount: ${currency.toUpperCase()} ${convertedAmount}`;
-        }
-
-        function calculateRate(type) {
-            let weight, purity, quantity, rate, total;
-
-            if (type === 'silver') {
-                weight = parseFloat(document.getElementById('silver-weight').value);
-                purity = parseFloat(document.getElementById('silver-purity').value);
-                quantity = parseFloat(document.getElementById('silver-quantity').value);
-                rate = (silverRates[silverRates.length - 1] * (purity / 100)); // Last available rate
-                total = weight * rate * quantity;
-                document.getElementById('silver-result').innerText = `Total Silver Rate: ₹${total.toFixed(2)}`;
-            } else if (type === 'gold') {
-                weight = parseFloat(document.getElementById('gold-weight').value);
-                purity = parseFloat(document.getElementById('gold-purity').value);
-                quantity = parseFloat(document.getElementById('gold-quantity').value);
-                rate = (goldRates[goldRates.length - 1] * (purity / 100)); // Last available rate
-                total = weight * rate * quantity;
-                document.getElementById('gold-result').innerText = `Total Gold Rate: ₹${total.toFixed(2)}`;
-            }
-        }
-
-        function generateBill() {
-            document.getElementById("bill-customer-name").innerText = document.getElementById("customer-name").value;
-            document.getElementById("bill-customer-contact").innerText = document.getElementById("customer-contact").value;
-            const silverResult = document.getElementById("silver-result").innerText;
-            const goldResult = document.getElementById("gold-result").innerText;
-            document.getElementById("bill-details").innerHTML = `${silverResult}<br>${goldResult}`;
-            const totalCost = (parseFloat(silverResult.match(/[\d,\.]+/g)[0]) || 0) + (parseFloat(goldResult.match(/[\d,\.]+/g)[0]) || 0);
-            document.getElementById("bill-total-cost").innerText = totalCost.toFixed(2);
-            document.getElementById("bill").style.display = "block";
-        }
-
-        function printBill() {
-            window.print();
-        }
-
-        function sendMessage() {
-            const name = document.getElementById("contact-name").value;
-            const email = document.getElementById("contact-email").value;
-            const message = document.getElementById("contact-message").value;
-            alert(`Message sent!\n\nName: ${name}\nEmail: ${email}\nMessage: ${message}`);
-        }
-    </script>
 </body>
+
 </html>

@@ -1,152 +1,144 @@
-* {
-    box-sizing: border-box;
-}
+@import url('https://fonts.googleapis.com/css2?family=Foldit:wght@300;400;500&family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
+
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
+    background-color: #f1f1f1;
 }
 
 .container {
     max-width: 800px;
-    width: 100%;
-    background-color: #fff;
+    margin: 0 auto;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
     text-align: center;
     color: #333;
+}
+
+.add-item,
+.items,
+.total,
+.invoice {
     margin-bottom: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.section {
-    margin-bottom: 20px;
-    padding: 15px;
-    background: #f9f9f9;
-    border-radius: 6px;
+.add-item h2,
+.items h2,
+.total h2,
+.invoice h2 {
+    margin-top: 0;
+    color: #333;
 }
 
-.section h2 {
-    color: #555;
-    margin-bottom: 10px;
+.input-group {
+    display: flex;
+    align-items: center;
 }
 
-label {
-    display: block;
-    margin-top: 10px;
-    color: #555;
+.input-group input[type="text"],
+.input-group input[type="number"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 10px;
 }
 
-input[type="text"],
-input[type="number"] {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-
-button {
-    margin-top: 15px;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
+.input-group button {
+    padding: 10px 16px;
+    background-color: #4caf50;
+    color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 3px;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
-button:hover {
+.input-group button:hover {
     background-color: #45a049;
 }
 
-.result {
-    margin-top: 10px;
-    color: #444;
+.items ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
-/* Invoice Styles */
-.bill {
-    background-color: #fdfdfd;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 30px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.bill h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.bill p {
-    font-size: 16px;
-    margin: 5px 0;
-    color: #444;
-}
-
-.bill hr {
-    border: none;
-    height: 1px;
-    background-color: #ddd;
-    margin: 15px 0;
-}
-
-.bill-details {
+.items li {
     display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
+    flex-wrap: wrap;
+    align-items:center;
+    justify-content:center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.bill-details p {
+.items li span {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+.items input{
+    width: 100px;
+    margin-right: 50px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8PX;
+}
+
+.items button {
+    padding: 10px 16px;
+    margin: 0 5px;
+    background-color: #ff4136;
+    color: #fff;
+    font-size: 12px;
     font-weight: bold;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
 }
 
-.signature-area {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-    padding-top: 10px;
+.items button:hover {
+    background-color: #e62d1f;
 }
 
-.signature-area div {
-    width: 45%;
-    text-align: center;
-}
-
-.signature-area p {
-    border-top: 1px solid #444;
-    padding-top: 5px;
-    color: #666;
-}
-
-.bill button {
-    display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    background-color: #4CAF50;
+.total button {
+    padding: 10px 16px;
+    background-color: #0074d9;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 3px;
     cursor: pointer;
-    font-size: 16px;
 }
 
-.bill button:hover {
-    background-color: #3e8e41;
+.total button:hover {
+    background-color: #0056b3;
+}
+
+.total-price {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.invoice button {
+    padding: 10px 16px;
+    background-color: #ff851b;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.invoice button:hover {
+    background-color: #e6730f;
 }
