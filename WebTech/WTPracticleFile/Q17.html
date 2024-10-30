@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pass or Fail Checker</title>
+</head>
+<body>
+    <input type="number" id="score" placeholder="Score" min="0" max="100">
+    <button onclick="check()">Check</button>
+    <p id="result"></p>
+
+    <script>
+        function check() {
+            const score = document.getElementById('score').value;
+            document.getElementById('result').textContent = score >= 50 ? "Passed!" : "Failed!";
+        }
+    </script>
+</body>
+</html>
