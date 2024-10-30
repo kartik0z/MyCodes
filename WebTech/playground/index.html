@@ -20,6 +20,13 @@
             <input type="text" id="customer-contact" placeholder="Contact Number" required>
         </div>
 
+        <!-- Product Name -->
+        <div class="section">
+            <h2>Product Information</h2>
+            <label for="product-name">Product Name:</label>
+            <input type="text" id="product-name" placeholder="e.g., Gold Ring" required>
+        </div>
+
         <!-- Silver Rate Calculator -->
         <div class="section">
             <h2>Silver Rate Calculator</h2>
@@ -31,6 +38,8 @@
             
             <label for="silver-quantity">Quantity:</label>
             <input type="number" id="silver-quantity" placeholder="e.g., 2" required>
+            
+            <p>Current Silver Rate: ₹<span id="silver-rate">Loading...</span> / gram</p>
             
             <button onclick="calculateRate('silver')">Calculate Silver Rate</button>
             <p id="silver-result" class="result"></p>
@@ -48,6 +57,8 @@
             <label for="gold-quantity">Quantity:</label>
             <input type="number" id="gold-quantity" placeholder="e.g., 1" required>
             
+            <p>Current Gold Rate: ₹<span id="gold-rate">Loading...</span> / gram</p>
+            
             <button onclick="calculateRate('gold')">Calculate Gold Rate</button>
             <p id="gold-result" class="result"></p>
         </div>
@@ -61,18 +72,8 @@
             <p><strong>Customer Name:</strong> <span id="bill-customer-name"></span></p>
             <p><strong>Contact No.:</strong> <span id="bill-customer-contact"></span></p>
             <hr>
-            <div id="bill-details"></div>
+            <p><strong>Product Name:</strong> <span id="bill-product-name"></span></p>
             <p><strong>Total Cost:</strong> ₹<span id="bill-total-cost"></span></p>
-            <hr>
-            <div class="signature-area">
-                <div>
-                    <p>Authorized Signature</p>
-                </div>
-                <div>
-                    <p>Customer Signature</p>
-                </div>
-            </div>
-            <button onclick="printBill()">Print Bill</button>
         </div>
     </div>
 
