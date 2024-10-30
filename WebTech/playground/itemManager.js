@@ -9,14 +9,16 @@ export class ItemManager {
     }
 
     addItem(name, price, quantity) {
-        this.items.push({ name, price: parseFloat(price), quantity: parseInt(quantity) });
+        this.items.push({ name, price, quantity });
         this.saveItems();
+        alert(`Item '${name}' added successfully.`);
     }
 
     updateItem(index, newQuantity) {
         if (index >= 0 && index < this.items.length) {
-            this.items[index].quantity = parseInt(newQuantity);
+            this.items[index].quantity = newQuantity;
             this.saveItems();
+            alert('Item updated successfully.');
         }
     }
 
@@ -24,6 +26,7 @@ export class ItemManager {
         if (index >= 0 && index < this.items.length) {
             this.items.splice(index, 1);
             this.saveItems();
+            alert('Item removed successfully.');
         }
     }
 

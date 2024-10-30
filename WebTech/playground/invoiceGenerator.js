@@ -3,6 +3,16 @@ export class InvoiceGenerator {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
+        // Validate input
+        if (!items || items.length === 0) {
+            console.error('No items provided for the invoice.');
+            return;
+        }
+        if (!customerInfo || !customerInfo.name) {
+            console.error('Customer information is incomplete.');
+            return;
+        }
+
         // Document setup
         doc.setFontSize(20);
         doc.text('Invoice', 105, 20, null, null, 'center');

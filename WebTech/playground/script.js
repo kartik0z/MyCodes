@@ -20,8 +20,15 @@ document.addEventListener('DOMContentLoaded', () => {
 function handleAddItem(event) {
     event.preventDefault();
     const itemName = document.getElementById('item-name').value;
-    const itemPrice = document.getElementById('item-price').value;
-    const itemQuantity = document.getElementById('item-quantity').value;
+    const itemPrice = parseFloat(document.getElementById('item-price').value);
+    const itemQuantity = parseInt(document.getElementById('item-quantity').value);
+
+    // Validate price and quantity
+    if (!itemName || isNaN(itemPrice) || itemPrice <= 0 || isNaN(itemQuantity) || itemQuantity <= 0) {
+        alert('Please enter valid item details.');
+        return;
+    }
+
     itemManager.addItem(itemName, itemPrice, itemQuantity);
     updateUI();
     event.target.reset();
@@ -32,6 +39,7 @@ function updateUI() {
     const total = itemManager.calculateTotal();
     const itemsTable = document.getElementById('items-table');
     itemsTable.innerHTML = '';
+
     items.forEach((item, index) => {
         const row = itemsTable.insertRow();
         row.innerHTML = `
@@ -45,6 +53,7 @@ function updateUI() {
             </td>
         `;
     });
+
     document.getElementById('total-price').textContent = `$${total.toFixed(2)}`;
     attachEventListeners();
 }
@@ -61,9 +70,11 @@ function attachEventListeners() {
 function handleUpdateItem(event) {
     const index = parseInt(event.target.dataset.index);
     const newQuantity = prompt('Enter new quantity:', itemManager.getItems()[index].quantity);
-    if (newQuantity !== null) {
+    if (newQuantity !== null && !isNaN(newQuantity) && newQuantity > 0) {
         itemManager.updateItem(index, newQuantity);
         updateUI();
+    } else {
+        alert('Please enter a valid quantity.');
     }
 }
 
@@ -87,6 +98,13 @@ function handleGenerateInvoice(event) {
         state: document.getElementById('customer-state').value,
         zip: document.getElementById('customer-zip').value,
     };
+
+    // Validate customer info
+    if (!customerInfo.name || !customerInfo.address) {
+        alert('Please fill in all customer information fields.');
+        return;
+    }
+
     const items = itemManager.getItems();
     const total = itemManager.calculateTotal();
     invoiceGenerator.generatePDF(items, total, customerInfo);
