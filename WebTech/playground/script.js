@@ -1,46 +1,58 @@
-let items = [];
+import { ItemManager } from './itemManager.js';
+import { InvoiceGenerator } from './invoiceGenerator.js';
 
-function addItem() {
-    const itemName = document.getElementById("item-name").value;
-    const itemPrice = parseFloat(document.getElementById("item-price").value);
-    const itemQuantity = parseInt(document.getElementById("item-quantity").value);
+const itemManager = new ItemManager();
+const invoiceGenerator = new InvoiceGenerator();
 
-    if (itemName && !isNaN(itemPrice) && !isNaN(itemQuantity)) {
-        const item = {
-            name: itemName,
-            price : itemPrice,
-            quantity: itemQuantity
-        };
+document.addEventListener('DOMContentLoaded', () => {
+    const addItemForm = document.getElementById('add-item-form');
+    const generateInvoiceButton = document.getElementById('generate-invoice');
 
-        items.push(item);
+    addItemForm.addEventListener('submit', handleAddItem);
+    generateInvoiceButton.addEventListener('click', handleGenerateInvoice);
 
-        renderItems();
+    updateUI();
+});
 
-        document.getElementById("item-name").value = "";
-        document.getElementById("item-price").value = "";
-        document.getElementById("item-quantity").value = "";
-    }
+function handleAddItem(event) {
+    event.preventDefault();
+    const name = document.getElementById('item-name').value;
+    const price = parseFloat(document.getElementById('item-price').value);
+    const quantity = parseInt(document.getElementById('item-quantity').value);
+
+    itemManager.addItem(name, price, quantity);
+    updateUI();
+    event.target.reset();
 }
 
-function removeItem(index) {
-    items.splice(index, 1);
-    renderItems();
-}
-
-function updateItem(index) {
+function handleUpdateItem(index) {
     const newQuantity = parseInt(document.getElementById(`item-quantity-${index}`).value);
-    if (!isNaN(newQuantity)) {
-        items[index].quantity = newQuantity;
-        renderItems();
-    }
+    itemManager.updateItem(index, newQuantity);
+    updateUI();
+}
+
+function handleRemoveItem(index) {
+    itemManager.removeItem(index);
+    updateUI();
+}
+
+function handleGenerateInvoice() {
+    const items = itemManager.getItems();
+    const total = itemManager.calculateTotal();
+    invoiceGenerator.generatePDF(items, total);
+}
+
+function updateUI() {
+    renderItems();
+    updateTotal();
 }
 
 function renderItems() {
-    const itemTable = document.getElementById("item-table");
-    const tbody = itemTable.getElementsByTagName("tbody")[0];
-    tbody.innerHTML = "";
+    const itemTable = document.getElementById('item-table');
+    const tbody = itemTable.getElementsByTagName('tbody')[0];
+    tbody.innerHTML = '';
 
-    items.forEach((item, index) => {
+    itemManager.getItems().forEach((item, index) => {
         const row = tbody.insertRow();
         row.innerHTML = `
             <td>${item.name}</td>
@@ -48,47 +60,18 @@ function renderItems() {
             <td>$${item.price.toFixed(2)}</td>
             <td>$${(item.price * item.quantity).toFixed(2)}</td>
             <td>
-                <button onclick="updateItem(${index})">Update</button>
-                <button onclick="removeItem(${index})">Remove</button>
+                <button onclick="handleUpdateItem(${index})">Update</button>
+                <button onclick="handleRemoveItem(${index})">Remove</button>
             </td>
         `;
     });
 }
 
-function calculateTotal() {
-    const totalPrice = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    document.getElementById("total-price").innerText = `Total: $${totalPrice.toFixed(2)}`;
+function updateTotal() {
+    const totalPrice = itemManager.calculateTotal();
+    document.getElementById('total-price').textContent = `$${totalPrice.toFixed(2)}`;
 }
 
-function generateInvoice() {
-    const invoiceTable = document.getElementById("invoice-table");
-    const tbody = invoiceTable.getElementsByTagName("tbody")[0];
-    tbody.innerHTML = "";
-
-    let total = 0;
-
-    items.forEach((item) => {
-        const row = tbody.insertRow();
-        row.innerHTML = `
-            <td>${item.name}</td>
-            <td>${item.quantity}</td>
-            <td>$${item.price.toFixed(2)}</td>
-            <td>$${(item.price * item.quantity).toFixed(2)}</td>
-        `;
-        total += item.price * item.quantity;
-    });
-
-    const totalRow = tbody.insertRow();
-    totalRow.innerHTML = `
-        <td>Total:</td>
-        <td></td>
-        <td></td>
-        <td>$${total.toFixed(2)}</td>
-    `;
-
-    document.getElementById("invoice-total").innerText = `Total: $${total.toFixed(2)}`;
-
-    calculateTotal();
-
-    window.print();
-}
+// Make functions globally accessible
+window.handleUpdateItem = handleUpdateItem;
+window.handleRemoveItem = handleRemoveItem;
