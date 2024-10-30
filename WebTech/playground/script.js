@@ -60,8 +60,8 @@ function renderItems() {
             <td>$${item.price.toFixed(2)}</td>
             <td>$${(item.price * item.quantity).toFixed(2)}</td>
             <td>
-                <button onclick="handleUpdateItem(${index})">Update</button>
-                <button onclick="handleRemoveItem(${index})">Remove</button>
+                <button onclick="window.handleUpdateItem(${index})">Update</button>
+                <button onclick="window.handleRemoveItem(${index})">Remove</button>
             </td>
         `;
     });

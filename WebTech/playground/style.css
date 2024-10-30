@@ -1,133 +1,246 @@
 :root {
-    --primary-color: #3498db;
-    --secondary-color: #2ecc71;
-    --background-color: #ecf0f1;
-    --text-color: #34495e;
-    --border-color: #bdc3c7;
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --secondary-color: #10b981;
+    --secondary-hover: #059669;
+    --background-color: #f1f5f9;
+    --text-color: #1e293b;
+    --border-color: #e2e8f0;
+    --danger-color: #ef4444;
+    --danger-hover: #dc2626;
+    --success-color: #22c55e;
+    --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --transition: all 0.3s ease;
+}
+
+/* Modern CSS Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    font-family: 'Roboto', Arial, sans-serif;
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
     background-color: var(--background-color);
     color: var(--text-color);
-    line-height: 1.6;
-    margin: 0;
-    padding: 20px;
+    line-height: 1.7;
+    min-height: 100vh;
+    padding: 2rem;
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
     background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    padding: 30px;
+    border-radius: 1rem;
+    box-shadow: var(--card-shadow);
+    padding: 2.5rem;
 }
 
+/* Typography */
 h1 {
     text-align: center;
-    color: var(--primary-color);
-    font-size: 2.5em;
-    margin-bottom: 30px;
+    color: var(--text-color);
+    font-size: 2.75rem;
+    font-weight: 800;
+    margin-bottom: 2.5rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: -0.025em;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 h2 {
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
-    padding-bottom: 10px;
-    margin-top: 30px;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding-bottom: 0.75rem;
+    margin-top: 2rem;
+    border-bottom: 2px solid var(--border-color);
 }
 
+/* Form Styles */
 .add-item {
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
 }
 
 .input-group {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 input[type="text"],
 input[type="number"] {
-    flex: 1;
-    padding: 12px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    font-size: 16px;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: var(--transition);
+    outline: none;
 }
 
+input[type="text"]:focus,
+input[type="number"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Button Styles */
 button {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: white;
     border: none;
-    padding: 12px 20px;
-    border-radius: 4px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 16px;
+    font-weight: 600;
+    font-size: 0.875rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.05em;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 button:hover {
-    background-color: #27ae60;
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
 }
 
+button[type="submit"] {
+    background-color: var(--secondary-color);
+}
+
+button[type="submit"]:hover {
+    background-color: var(--secondary-hover);
+}
+
+/* Table Styles */
 table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    margin-top: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 1.5rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
 }
 
 th, td {
-    padding: 15px;
+    padding: 1rem 1.5rem;
     text-align: left;
-    border-bottom: 1px solid var(--border-color);
 }
 
 th {
     background-color: var(--primary-color);
     color: white;
-    font-weight: bold;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.05em;
+    font-size: 0.875rem;
 }
 
-tr:nth-child(even) {
-    background-color: #f2f2f2;
+td {
+    background-color: #ffffff;
+    border-bottom: 1px solid var(--border-color);
 }
 
-tr:hover {
-    background-color: #e8f4fd;
+tr:last-child td {
+    border-bottom: none;
 }
 
+tr:hover td {
+    background-color: #f8fafc;
+}
+
+/* Total and Invoice Sections */
 .total, .invoice {
-    margin-top: 30px;
-    text-align: right;
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    margin-top: 2rem;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
 }
 
 #total-price, #invoice-total {
-    font-size: 1.2em;
-    font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: 700;
     color: var(--primary-color);
-    margin-top: 10px;
+    margin-top: 0.5rem;
 }
 
+/* Action Buttons */
+td button {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    margin: 0 0.25rem;
+}
+
+td button:first-child {
+    background-color: var(--success-color);
+}
+
+td button:last-child {
+    background-color: var(--danger-color);
+}
+
+td button:first-child:hover {
+    background-color: var(--success-color);
+    opacity: 0.9;
+}
+
+td button:last-child:hover {
+    background-color: var(--danger-hover);
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    .container {
+        padding: 1.5rem;
+    }
+
     .input-group {
-        flex-direction: column;
+        grid-template-columns: 1fr;
     }
-    
-    input[type="text"],
-    input[type="number"] {
-        margin-bottom: 10px;
+
+    th, td {
+        padding: 0.75rem;
     }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.add-item, .total, .invoice {
+    animation: fadeIn 0.3s ease-out;
 }
