@@ -75,20 +75,78 @@ button:hover {
     color: #444;
 }
 
+/* Invoice Styles */
 .bill {
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    background-color: #fdfdfd;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .bill h2 {
     text-align: center;
     color: #333;
+    margin-bottom: 20px;
+}
+
+.bill p {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #444;
+}
+
+.bill hr {
+    border: none;
+    height: 1px;
+    background-color: #ddd;
+    margin: 15px 0;
+}
+
+.bill-details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.bill-details p {
+    font-weight: bold;
+}
+
+.signature-area {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding-top: 10px;
+}
+
+.signature-area div {
+    width: 45%;
+    text-align: center;
+}
+
+.signature-area p {
+    border-top: 1px solid #444;
+    padding-top: 5px;
+    color: #666;
 }
 
 .bill button {
     display: block;
-    margin: 20px auto 0;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.bill button:hover {
+    background-color: #3e8e41;
 }
