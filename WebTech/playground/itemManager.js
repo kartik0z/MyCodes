@@ -1,16 +1,21 @@
 export class ItemManager {
     constructor() {
-        this.items = JSON.parse(localStorage.getItem('items')) || [];
+        this.items = this.loadItems();
+    }
+
+    loadItems() {
+        const storedItems = localStorage.getItem('items');
+        return storedItems ? JSON.parse(storedItems) : [];
     }
 
     addItem(name, price, quantity) {
-        this.items.push({ name, price, quantity });
+        this.items.push({ name, price: parseFloat(price), quantity: parseInt(quantity) });
         this.saveItems();
     }
 
     updateItem(index, newQuantity) {
         if (index >= 0 && index < this.items.length) {
-            this.items[index].quantity = newQuantity;
+            this.items[index].quantity = parseInt(newQuantity);
             this.saveItems();
         }
     }
