@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gold & Silver Rate Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gold & Silver Rate Calculator</h1>
+
+        <!-- Customer Information -->
+        <div class="section">
+            <h2>Customer Information</h2>
+            <label for="customer-name">Name:</label>
+            <input type="text" id="customer-name" placeholder="Customer Name" required>
+
+            <label for="customer-contact">Contact No.:</label>
+            <input type="text" id="customer-contact" placeholder="Contact Number" required>
+        </div>
+
+        <!-- Silver Rate Calculator -->
+        <div class="section">
+            <h2>Silver Rate Calculator</h2>
+            <label for="silver-weight">Weight (grams):</label>
+            <input type="number" id="silver-weight" placeholder="e.g., 100" required>
+            
+            <label for="silver-purity">Silver Purity (%):</label>
+            <input type="number" id="silver-purity" placeholder="e.g., 99.9" required>
+            
+            <label for="silver-quantity">Quantity:</label>
+            <input type="number" id="silver-quantity" placeholder="e.g., 2" required>
+            
+            <button onclick="calculateRate('silver')">Calculate Silver Rate</button>
+            <p id="silver-result" class="result"></p>
+        </div>
+
+        <!-- Gold Rate Calculator -->
+        <div class="section">
+            <h2>Gold Rate Calculator</h2>
+            <label for="gold-weight">Weight (grams):</label>
+            <input type="number" id="gold-weight" placeholder="e.g., 10" required>
+            
+            <label for="gold-purity">Gold Purity (%):</label>
+            <input type="number" id="gold-purity" placeholder="e.g., 99.9" required>
+            
+            <label for="gold-quantity">Quantity:</label>
+            <input type="number" id="gold-quantity" placeholder="e.g., 1" required>
+            
+            <button onclick="calculateRate('gold')">Calculate Gold Rate</button>
+            <p id="gold-result" class="result"></p>
+        </div>
+
+        <!-- Print Bill Button -->
+        <button onclick="generateBill()">Generate Bill</button>
+
+        <!-- Bill Template -->
+        <div id="bill" class="bill" style="display: none;">
+            <h2>Invoice</h2>
+            <p><strong>Customer Name:</strong> <span id="bill-customer-name"></span></p>
+            <p><strong>Contact No.:</strong> <span id="bill-customer-contact"></span></p>
+            <hr>
+            <p id="bill-details"></p>
+            <p><strong>Total Cost:</strong> ₹<span id="bill-total-cost"></span></p>
+            <hr>
+            <p>Authorized Signature: ____________________</p>
+            <p>Customer Signature: ____________________</p>
+            <button onclick="printBill()">Print Bill</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
