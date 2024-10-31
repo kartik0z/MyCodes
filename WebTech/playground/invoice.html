@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Jewelry Invoice Generator Pro</title>
+    
+    <!-- Enhanced Font and Icon Integration -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Additional Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+/* Enhanced CSS with Modern Design Elements */
+:root {
+    /* Color Palette */
+    --primary-color: #2c3e50;
+    --secondary-color: #e74c3c;
+    --accent-color: #f1c40f;
+    --text-color: #34495e;
+    --light-gray: #ecf0f1;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --error-color: #c0392b;
+    --gold: #FFD700;
+    --silver: #C0C0C0;
+    --platinum: #E5E4E2;
+    
+    /* Dark Theme Colors */
+    --dark-bg: #1a1a1a;
+    --dark-surface: #2d2d2d;
+    --dark-text: #ffffff;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 8px rgba(0,0,0,0.12);
+    --shadow-lg: 0 8px 16px rgba(0,0,0,0.15);
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-full: 9999px;
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    padding: var(--spacing-xl);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* Dark Mode Styles */
+body[data-theme="dark"] {
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    color: var(--dark-text);
+}
+
+body[data-theme="dark"] .container {
+    background: var(--dark-bg);
+    box-shadow: var(--shadow-lg);
+}
+
+body[data-theme="dark"] input,
+body[data-theme="dark"] textarea,
+body[data-theme="dark"] select {
+    background: var(--dark-surface);
+    color: var(--dark-text);
+    border-color: #444;
+}
+
+/* Container Styles */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Header Styles */
+.header {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: var(--spacing-xl);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 45%, rgba(255,255,255,0.1) 50%, transparent 55%);
+    animation: shimmer 3s infinite linear;
+}
+
+.header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Content Layout */
+.content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-xl);
+}
+
+/* Form Styles */
+.form-section {
+    padding: var(--spacing-lg);
+    background: rgba(255,255,255,0.05);
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(10px);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-sm);
+    font-weight: 500;
+    color: inherit;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid #ddd;
+    border-radius: var(--radius-md);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+}
+
+/* Button Styles */
+.btn {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    transition: all 0.3s ease;
+}
+
+.btn i {
+    font-size: 1.2em;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-secondary {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.btn-accent {
+    background: var(--accent-color);
+    color: var(--primary-color);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Item Row Styles */
+.item-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr auto;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    align-items: center;
+    animation: slideIn 0.3s ease-out;
+}
+
+.delete-btn {
+    color: var(--error-color);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-full);
+    transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+    background: rgba(192, 57, 43, 0.1);
+    transform: scale(1.1);
+}
+
+/* Preview Section Styles */
+.preview-section {
+    background: var(--light-gray);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+}
+
+.invoice-preview {
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+}
+
+/* Toast Notifications */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: var(--spacing-md) var(--spacing-lg);
+     border-radius: var(--radius-md);
+    background: var(--success-color);
+    color: white;
+    font-weight: 600;
+    animation: slideIn 0.3s ease-out;
+    z-index: 1000;
+}
+
+.toast.show {
+    transform: translateX(0);
+}
+
+.toast.warning {
+    background: var(--warning-color);
+}
+
+.toast.error {
+    background: var(--error-color);
+}
+    #invoice-preview {
+        font-family: 'Arial', sans-serif;
+        color: #333;
+        background: #fff;
+        padding: 40px;
+        max-width: 800px;
+        margin: 20px auto;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    #invoice-preview h1 {
+        color: #2c3e50;
+        text-align: center;
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+
+    #invoice-preview .invoice-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 40px;
+    }
+
+    #invoice-preview .invoice-header div {
+        flex: 1;
+    }
+
+    #invoice-preview .invoice-details {
+        text-align: right;
+    }
+
+    #invoice-preview h2 {
+        color: #2980b9;
+        font-size: 18px;
+        margin-top: 30px;
+        margin-bottom: 10px;
+        border-bottom: 2px solid #3498db;
+        padding-bottom: 5px;
+    }
+
+    #invoice-preview table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+
+    #invoice-preview table th,
+    #invoice-preview table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    #invoice-preview table th {
+        background-color: #f9f9f9;
+        font-weight: bold;
+        color: #2c3e50;
+        text-transform: uppercase;
+        font-size: 12px;
+    }
+
+    #invoice-preview table tr:last-child td {
+        border-bottom: none;
+    }
+
+    #invoice-preview .totals {
+        margin-top: 30px;
+        text-align: right;
+    }
+
+    #invoice-preview .totals p {
+        margin: 5px 0;
+    }
+
+    #invoice-preview .total {
+        font-size: 18px;
+        font-weight: bold;
+        color: #2980b9;
+    }
+
+    #invoice-preview .footer {
+        margin-top: 50px;
+        text-align: center;
+        font-size: 12px;
+        color: #7f8c8d;
+    }
+/* Animations */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+    </style>
+</head>
+<body>
+        <div class="content">
+            <div class="form-section">
+                <form id="invoice-form">
+                    <div class="form-group">
+                        <label>Invoice Date</label>
+                        <input type="date" id="invoice-date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Invoice Number</label>
+                        <input type="text" id="invoice-number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Customer Name</label>
+                        <input type="text" id="customer-name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Customer Email</label>
+                        <input type="email" id="customer-email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Customer Number</label>
+                        <textarea id="customer-address" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Payment Terms</label>
+                        <select id="payment-terms" required>
+                            <option value="">Select Payment Terms</option>
+                            <option value="Due on receipt">Due on receipt</option>
+                            <option value="Net 30">Net 30</option>
+                            <option value="Net 60">Net 60</option>
+                        </select>
+                    </div>
+
+                    <div class="items-section">
+                        <h3>Items</h3>
+                        <div id="items-container"></div>
+                        <button type="button" class="btn btn-accent" id="add-item">
+                            <i class="fas fa-plus"></i> Add Item
+                        </button>
+                    </div>
+
+                    <div class="total-section">
+                        <h3>Subtotal: ₹<span id="subtotal-amount">0.00</span></h3>
+                        <h3>Tax (10%): ₹<span id="tax-amount">0.00</span></h3>
+                        <h3>Total: ₹<span id="total-amount">0.00</span></h3>
+                    </div>
+
+                    <div style="margin-top: var(--spacing-lg);">
+                        <button type="button" class="btn btn-primary" id="generate-invoice">
+                            <i class="fas fa-file-invoice"></i> Generate Invoice
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="save-draft">
+                            <i class="fas fa-save"></i> Save as Draft
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="preview-section">
+                <div id="invoice-preview" class="invoice-preview"></div>
+                <button id="download-pdf" class="btn btn-secondary" style="display: none; margin-top: var(--spacing-md);">
+                    <i class="fas fa-download"></i> Download PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script>
+        let items = [];
+        let itemCounter = 0;
+
+        document.getElementById('invoice-date').valueAsDate = new Date();
+        document.getElementById('invoice-number').value = 'INV-' + Math.floor(Math.random() * 10000);
+
+        document.getElementById('add-item').addEventListener('click', function() {
+            const itemRow = `
+                <div class="item-row" id="item-row-${itemCounter}">
+                    <input type="text" id="item-${itemCounter}-description" placeholder="Item Description" required>
+                    <input type="number" id="item-${itemCounter}-quantity" placeholder="Quantity" min="1" required>
+                    <input type="number" id="item-${itemCounter}-price" placeholder="Price" step="0.01" min="0" required>
+                    <input type="text" id="item-${itemCounter}-total" placeholder="Total" readonly>
+                    <button type="button" class="delete-btn" onclick="deleteItem(${itemCounter})">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            `;
+            document.getElementById('items-container').insertAdjacentHTML('beforeend', itemRow);
+
+            // Add event listeners for real-time total calculation
+            document.getElementById(`item-${itemCounter}-quantity`).addEventListener('input', () => calculateItemTotal(itemCounter));
+            document.getElementById(`item-${itemCounter}-price`).addEventListener('input', () => calculateItemTotal(itemCounter));
+
+            itemCounter++;
+        });
+
+        function deleteItem(index) {
+            document.getElementById(`item-row-${index}`).remove();
+            calculateTotal();
+        }
+
+        function calculateItemTotal(index) {
+            const quantity = parseFloat(document.getElementById(`item-${index}-quantity`).value) || 0;
+            const price = parseFloat(document.getElementById(`item-${index}-price`).value) || 0;
+            const total = quantity * price;
+            document.getElementById(`item-${index}-total`).value = total.toFixed(2);
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            let subtotal = 0;
+ const itemRows = document.querySelectorAll('.item-row');
+            itemRows.forEach(row => {
+                const totalInput = row.querySelector('input[id$="-total"]');
+                if (totalInput) {
+                    subtotal += parseFloat(totalInput.value) || 0;
+                }
+            });
+            const tax = subtotal * 0.1; // 10% tax
+            const total = subtotal + tax;
+
+            document.getElementById('subtotal-amount').textContent = subtotal.toFixed(2);
+            document.getElementById('tax-amount').textContent = tax.toFixed(2);
+            document.getElementById('total-amount').textContent = total.toFixed(2);
+        }
+
+        document.getElementById('generate-invoice').addEventListener('click', function() {
+            const invoiceDate = document.getElementById('invoice-date').value;
+            const invoiceNumber = document.getElementById('invoice-number').value;
+            const customerName = document.getElementById('customer-name').value;
+            const customerEmail = document.getElementById('customer-email').value;
+            const customerAddress = document.getElementById('customer-address').value;
+
+            const itemRows = document.querySelectorAll('.item-row');
+            items = [];
+            itemRows.forEach(row => {
+                const description = row.querySelector('input[id$="-description"]').value;
+                const quantity = parseFloat(row.querySelector('input[id$="-quantity"]').value) || 0;
+                const price = parseFloat(row.querySelector('input[id$="-price"]').value) || 0;
+                const total = quantity * price;
+
+                items.push({
+                    description,
+                    quantity,
+                    price,
+                    total
+                });
+            });
+
+            const subtotal = items.reduce((acc, item) => acc + item.total, 0);
+            const tax = subtotal * 0.1; // 10% tax
+            const total = subtotal + tax;
+
+            const invoiceHTML = `
+    <div id="invoice-preview">
+        <h1>Invoice #${invoiceNumber}</h1>
+        <div class="invoice-header">
+            <div class="customer-details">
+                <h2>Customer Details</h2>
+                <p><strong>Name:</strong> ${customerName}</p>
+                <p><strong>Email:</strong> ${customerEmail}</p>
+                <p><strong>Number:</strong> ${customerAddress}</p>
+            </div>
+            <div class="invoice-details">
+                <h2>Invoice Details</h2>
+                <p><strong>Invoice Date:</strong> ${invoiceDate}</p>
+                <p><strong>Invoice Number:</strong> ${invoiceNumber}</p>
+            </div>
+        </div>
+
+        <h2>Items</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${items.map(item => `
+                    <tr>
+                        <td>${item.description}</td>
+                        <td>${item.quantity}</td>
+                        <td>₹${item.price.toFixed(2)}</td>
+                        <td>₹${item.total.toFixed(2)}</td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>
+
+        <div class="totals">
+            <p><strong>Subtotal:</strong> ₹${subtotal.toFixed(2)}</p>
+            <p><strong>Tax (10%):</strong> ₹${tax.toFixed(2)}</p>
+            <p class="total"><strong>Total:</strong> ₹${total.toFixed(2)}</p>
+        </div>
+
+        <div class="footer">
+            <p>Thank you for your business!</p>
+        </div>
+    </div>
+`;
+
+            document.getElementById('invoice-preview').innerHTML = invoiceHTML;
+            document.getElementById('download-pdf').style.display = 'block';
+        });
+
+        // Replace the existing PDF download event listener with this updated version:
+
+        document.getElementById('download-pdf').addEventListener('click', function() {
+            const { jsPDF } = window.jspdf;
+            const invoicePreview = document.getElementById('invoice-preview');
+            
+            html2canvas(invoicePreview, {scale: 2}).then(canvas => {
+                const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                const pdf = new jsPDF('p', 'pt', 'a4');
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+                
+                pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save(`Invoice-${document.getElementById('invoice-number').value}.pdf`);
+            });
+        });
+    </script>
+</body>
+</html>
