@@ -1,25 +1,17 @@
 #include <stdio.h>
 
-int main(){
-    int a, b, c;
+void towerOfHanoi(int n, char from, char to, char aux) {
+    if (n == 1) {
+        printf("Move disk 1 from %c to %c\n", from, to);
+        return;
+    }
+    towerOfHanoi(n - 1, from, aux, to);
+    printf("Move disk %d from %c to %c\n", n, from, to);
+    towerOfHanoi(n - 1, aux, to, from);
+}
 
-    printf("Enter the values for a:\n");
-    scanf("%d", &a);
-    printf("Enter the values for b:\n");
-    scanf("%d", &b);
-    printf("Enter the values for c:\n");
-    scanf("%d", &c);
-
-    int max = a;
-    if (b > max) max = b;
-    if (c > max) max = c;
-
-    if (max == a)
-        printf("A is greater,");
-    else if (max == b)
-        printf("B is greater,");
-    else
-        printf("C is greater.");
-
+int main() {
+    int n = 3; // Number of disks
+    towerOfHanoi(n, 'A', 'C', 'B');
     return 0;
 }
