@@ -1,11 +1,11 @@
 :root {
-    --primary-color: #2563eb;
-    --primary-hover: #1d4ed8;
-    --secondary-color: #10b981;
+    --primary-color: #E9EED9;
+    --primary-hover: #E4E0E1;
+    --secondary-color: #AAB396;
     --secondary-hover: #059669;
-    --background-color: #f1f5f9;
-    --text-color: #1e293b;
-    --border-color: #e2e8f0;
+    --background-color: #9A7E6F;
+    --text-color: #859F3D;
+    --border-color: #914F1E;
     --danger-color: #ef4444;
     --danger-hover: #dc2626;
     --success-color: #22c55e;
