@@ -45,7 +45,7 @@ void TotalBalance(){
     printf("Your total balance is: %.2f\n", balance);
 }
 
-void WithdrawingMoney(){
+void DepositMoney() {
     float deposit;
     printf("Enter the amount to deposit: $");
     scanf("%f", &deposit);
@@ -57,7 +57,7 @@ void WithdrawingMoney(){
     }
 }
 
-void withdrawMoney() {
+void WithdrawingMoney() {
     float withdraw;
     printf("Enter the amount to withdraw: $");
     scanf("%f", &withdraw);
