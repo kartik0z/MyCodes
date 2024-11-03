@@ -1,11 +1,11 @@
 :root {
-    --primary-color: #E9EED9;
-    --primary-hover: #E4E0E1;
-    --secondary-color: #AAB396;
-    --secondary-hover: #059669;
-    --background-color: #9A7E6F;
-    --text-color: #859F3D;
-    --border-color: #914F1E;
+    --primary-color: #DFB6B2; /* Adjusted to palette */
+    --primary-hover: #854F6C; /* Adjusted to palette */
+    --secondary-color: #2B124C; /* Adjusted to palette */
+    --secondary-hover: #190019; /* Adjusted to palette */
+    --background-color: #52285B; /* Adjusted to palette */
+    --text-color: #FBE4D8; /* Adjusted to palette */
+    --border-color: #2B124C; /* Adjusted to palette */
     --danger-color: #ef4444;
     --danger-hover: #dc2626;
     --success-color: #22c55e;
@@ -31,7 +31,7 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    background-color: #ffffff;
+    background-color: var(--primary-color);
     border-radius: 1rem;
     box-shadow: var(--card-shadow);
     padding: 2.5rem;
@@ -39,7 +39,7 @@ body {
 
 h1 {
     text-align: center;
-    color: var(--text-color);
+    color: var(--secondary-color);
     font-size: 2.75rem;
     font-weight: 800;
     margin-bottom: 2.5rem;
@@ -56,11 +56,11 @@ h2 {
     font-weight: 700;
     padding-bottom: 0.75rem;
     margin-top: 2rem;
-    border-bottom: 2px solid var(--border-color);
+    border-bottom: 2px solid var(--secondary-hover);
 }
 
 .add-item {
-    background-color: #ffffff;
+    background-color: var(--background-color);
     border-radius: 1rem;
     padding: 2rem;
     margin-bottom: 2rem;
@@ -90,13 +90,13 @@ input[type="tel"] {
 input[type="text"]:focus,
 input[type="number"]:focus,
 input[type="tel"]:focus {
-    border-color: var(--primary-color);
+    border-color: var(--primary-hover);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 button {
     background-color: var(--primary-color);
-    color: white;
+    color: var(--background-color);
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 0.5rem;
@@ -129,15 +129,15 @@ table {
 
 th, td {
     padding: 1rem 1.5rem;
-    text-align: left ;
+    text-align: left;
     border-bottom: 1px solid var(--border-color);
 }
 
 th {
     background-color: var(--primary-color);
-    color: white;
+    color: var(--text-color);
     font-weight: 700;
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 2px solid var(--primary-hover);
 }
 
 td {
@@ -147,7 +147,7 @@ td {
 .total {
     margin-top: 2rem;
     padding: 2rem;
-    background-color: #ffffff;
+    background-color: var(--secondary-color);
     border-radius: 1rem;
     box-shadow: var(--card-shadow);
     border: 1px solid var(--border-color);
@@ -157,6 +157,7 @@ td {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
+    color: var(--text-color);
 }
 
 .modal {
@@ -189,7 +190,7 @@ td {
 #customer-info-form input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--secondary-hover);
     border-radius: 4px;
 }
 
@@ -208,29 +209,29 @@ td {
 }
 
 @keyframes myAnim {
-	0%,
-	100% {
-		transform: translateY(0) rotate(0);
-		transform-origin: 50% 50%;
-	}
+    0%,
+    100% {
+        transform: translateY(0) rotate(0);
+        transform-origin: 50% 50%;
+    }
 
-	15% {
-		transform: translateY(-30px) rotate(-6deg);
-	}
+    15% {
+        transform: translateY(-30px) rotate(-6deg);
+    }
 
-	30% {
-		transform: translateY(15px) rotate(6deg);
-	}
+    30% {
+        transform: translateY(15px) rotate(6deg);
+    }
 
-	45% {
-		transform: translateY(-15px) rotate(-3.6deg);
-	}
+    45% {
+        transform: translateY(-15px) rotate(-3.6deg);
+    }
 
-	60% {
-		transform: translateY(9px) rotate(2.4deg);
-	}
+    60% {
+        transform: translateY(9px) rotate(2.4deg);
+    }
 
-	75% {
-		transform: translateY(-6px) rotate(-1.2deg);
-	}
+    75% {
+        transform: translateY(-6px) rotate(-1.2deg);
+    }
 }
