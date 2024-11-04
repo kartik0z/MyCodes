@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>BCA Marks Calculator</title>
+    <script>
+        // Prompt user for marks
+        var Maths = prompt("Enter Your Maths Marks:");
+        var WebTech = prompt("Enter Your Web Technologies Marks:");
+        var JAVA = prompt("Enter Your Java Programming Marks:");
+        var SoftEng = prompt("Enter Your Software Engineering Marks:");
+        var CN = prompt("Enter Your Computer Networking Marks:");
+
+        // Calculate total marks
+        var result = Number(Maths) + Number(WebTech) + Number(JAVA) + Number(SoftEng) + Number(CN);
+        alert("Total marks scored: " + result);
+
+        // Check if the student passed or failed
+        if (result > 170) {
+            confirm("Congratulations! You passed and are promoted to the next semester.");
+        } else {
+            confirm("Fail");
+        }
+
+        var e = confirm("Thank you for checking");
+    </script>
+</head>
+<body>
+</body>
+</html>
