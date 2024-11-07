@@ -1,72 +1,68 @@
 #include <stdio.h>
+#include <stdbool.h>
 
-float balance=1000.0;
+// Function to get a valid probability between 0 and 1
+double getValidProbability(const char *prompt) {
+    double probability;
+    bool valid = false;
 
-void TotalBalance();
-void WithdrawingMoney();
-void DepositMoney();
+    while (!valid) {
+        printf("%s", prompt);
+        scanf("%lf", &probability);
 
-int main(){
-    int pin, choice, CorrectPin=1234;
-    
-    printf("Welcome to the ATM!\n");
-    printf("Please enter your pin:\n");
-    scanf("%d", &pin);
-
-    if(pin==CorrectPin){
-        do{
-            printf("<======ATM MENU======>\n");
-            printf("1. Check Balance\n");
-            printf("2. Withdraw Money\n");
-            printf("3. Deposit Money\n");
-            printf("4. Exit\n");
-            printf("Put in your choice:\n");
-            scanf("%d", &choice);
-
-            switch(choice){
-                case 1: TotalBalance();
-                    break;
-                case 2: WithdrawingMoney();
-                    break;
-                case 3: DepositMoney();
-                    break;
-                case 4: printf("Thank you for visiting our ATM!\n");
-                    break;
-                default: printf("Invalid choice");
-            }
-        }while(choice!=4);
-    }else{
-        printf("Invalid Pin! Try again!");
+        // Check if the input is a valid probability (between 0 and 1)
+        if (probability >= 0.0 && probability <= 1.0) {
+            valid = true;
+        } else {
+            printf("Invalid input. Please enter a probability between 0 and 1.\n");
+        }
     }
+
+    return probability;
+}
+
+// Function to calculate conditional probability using Bayes' Theorem
+double calculateBayesTheorem(double pB_given_A, double pA, double pB) {
+    if (pB == 0) {
+        printf("Error: Probability of event B cannot be zero.\n");
+        return -1; // Return an error code
+    }
+    return (pB_given_A * pA) / pB;
+}
+
+// Function to display the result
+void displayResult(double result) {
+    if (result >= 0) {
+        printf("The probability P(A|B) is: %.4f\n", result);
+    }
+}
+
+int main() {
+    double pB_given_A, pA, pB, pA_given_B;
+    char choice;
+
+    do {
+        // Get the probability of event B given A (P(B|A))
+        pB_given_A = getValidProbability("Enter the probability of event B given A (P(B|A)): ");
+
+        // Get the prior probability of event A (P(A))
+        pA = getValidProbability("Enter the prior probability of event A (P(A)): ");
+
+        // Get the total probability of event B (P(B))
+        pB = getValidProbability("Enter the total probability of event B (P(B)): ");
+
+        // Calculate the conditional probability P(A|B) using Bayes' Theorem
+        pA_given_B = calculateBayesTheorem(pB_given_A, pA, pB);
+
+        // If no error in calculation, display the result
+        displayResult(pA_given_B);
+
+        // Ask if the user wants to perform another calculation
+        printf("Would you like to calculate another probability using Bayes' Theorem? (y/n): ");
+        scanf(" %c", &choice);  // Adding a space before %c to catch any previous newline character
+
+    } while (choice == 'y' || choice == 'Y');  // Repeat if the user enters 'y' or 'Y'
+
+    printf("Thank you for using the Bayes' Theorem calculator. Goodbye!\n");
     return 0;
-}
-
-void TotalBalance(){
-    printf("Your total balance is: %.2f\n", balance);
-}
-
-void DepositMoney() {
-    float deposit;
-    printf("Enter the amount to deposit: $");
-    scanf("%f", &deposit);
-    if (deposit > 0) {
-        balance += deposit;
-        printf("Deposit successful! Your new balance is: $%.2f\n", balance);
-    } else {
-        printf("Invalid amount. Deposit failed.\n");
-    }
-}
-
-void WithdrawingMoney() {
-    float withdraw;
-    printf("Enter the amount to withdraw: $");
-    scanf("%f", &withdraw);
-    if (withdraw > 0 && withdraw <= balance) {
-        balance -= withdraw;
-        printf("Withdrawal successful! Your new balance is: $%.2f\n", balance);
-    } else if (withdraw > balance) {
-        printf("Insufficient balance. Withdrawal failed.\n");
-    } else {
-        printf("Invalid amount. Withdrawal failed.\n");
-    }
 }
