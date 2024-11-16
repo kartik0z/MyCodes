@@ -1,68 +1,44 @@
 #include <stdio.h>
-#include <string.h>
 
+// Structure to hold student information
 struct Student {
-    int roll_no;
     char name[50];
-    float marks;
-    char grade;
-    char status[10];
+    int roll_no;
+    float marks[5]; // Array to store marks for 5 subjects
 };
 
-// Function to calculate grade based on marks
-char calculate_grade(float marks) {
-    if (marks >= 90) return 'A';
-    else if (marks >= 75) return 'B';
-    else if (marks >= 50) return 'C';
-    else if (marks >= 40) return 'D';
-    else return 'F';
-}
-
-// Function to determine pass/fail status
-void calculate_status(float marks, char *status) {
-    if (marks >= 40)
-        strcpy(status, "Pass");
-    else
-        strcpy(status, "Fail");
-}
-
 int main() {
-    int n;
-    printf("Enter the number of students: ");
-    scanf("%d", &n);
-
-    struct Student students[n];
+    struct Student student; // Declare a student structure
+    float total = 0.0, average;
 
     // Input student details
-    for (int i = 0; i < n; i++) {
-        printf("\nEnter details for student %d:\n", i + 1);
-        printf("Roll No: ");
-        scanf("%d", &students[i].roll_no);
-        printf("Name: ");
-        getchar(); // Clear the newline character left in the input buffer
-        fgets(students[i].name, sizeof(students[i].name), stdin);
-        students[i].name[strcspn(students[i].name, "\n")] = '\0'; // Remove trailing newline
-        printf("Marks: ");
-        scanf("%f", &students[i].marks);
+    printf("Enter the student's name: ");
+    fgets(student.name, sizeof(student.name), stdin);
 
-        // Calculate grade and pass/fail status
-        students[i].grade = calculate_grade(students[i].marks);
-        calculate_status(students[i].marks, students[i].status);
+    printf("Enter the roll number: ");
+    scanf("%d", &student.roll_no);
+
+    // Input marks for 5 subjects
+    printf("Enter marks for 5 subjects:\n");
+    for (int i = 0; i < 5; i++) {
+        printf("Subject %d: ", i + 1);
+        scanf("%f", &student.marks[i]);
+        total += student.marks[i];
     }
 
-    // Display results
-    printf("\nStudent Results:\n");
-    printf("-----------------------------------------------------\n");
-    printf("Roll No\tName\t\tMarks\tGrade\tStatus\n");
-    printf("-----------------------------------------------------\n");
-    for (int i = 0; i < n; i++) {
-        printf("%d\t%-15s\t%.2f\t%c\t%s\n",
-               students[i].roll_no,
-               students[i].name,
-               students[i].marks,
-               students[i].grade,
-               students[i].status);
+    // Calculate average
+    average = total / 5;
+
+    // Display student details
+    printf("\nStudent Details:\n");
+    printf("Name: %s", student.name);
+    printf("Roll Number: %d\n", student.roll_no);
+    printf("Marks: ");
+    for (int i = 0; i < 5; i++) {
+        printf("%.2f ", student.marks[i]);
     }
+    printf("\nTotal Marks: %.2f\n", total);
+    printf("Average Marks: %.2f\n", average);
 
     return 0;
 }
