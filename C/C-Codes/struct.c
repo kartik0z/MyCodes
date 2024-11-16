@@ -8,17 +8,33 @@ struct Student {
 };
 
 int main() {
-    struct Student student1;
+    int n;
+    printf("Enter the number of students: ");
+    scanf("%d", &n);
 
-    // Assign values to structure members
-    student1.roll_no = 101;
-    strcpy(student1.name, "Alice");
-    student1.marks = 95.5;
+    struct Student students[n];
 
-    // Print structure members
-    printf("Student Roll No: %d\n", student1.roll_no);
-    printf("Student Name: %s\n", student1.name);
-    printf("Student Marks: %.2f\n", student1.marks);
+    // Input student details using a for loop
+    for (int i = 0; i < n; i++) {
+        printf("\nEnter details for student %d:\n", i + 1);
+        printf("Roll No: ");
+        scanf("%d", &students[i].roll_no);
+        printf("Name: ");
+        getchar(); // Clear the newline character left in the input buffer
+        fgets(students[i].name, sizeof(students[i].name), stdin);
+        students[i].name[strcspn(students[i].name, "\n")] = '\0'; // Remove the trailing newline
+        printf("Marks: ");
+        scanf("%f", &students[i].marks);
+    }
+
+    // Print student details using a for loop
+    printf("\nStudent Details:\n");
+    for (int i = 0; i < n; i++) {
+        printf("\nStudent %d:\n", i + 1);
+        printf("Roll No: %d\n", students[i].roll_no);
+        printf("Name: %s\n", students[i].name);
+        printf("Marks: %.2f\n", students[i].marks);
+    }
 
     return 0;
 }
