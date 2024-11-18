@@ -1,37 +1,29 @@
 #include <stdio.h>
 
-// Define the structure for Employee
 struct Employee {
-    int id;
     char name[50];
-    float basicPay;
-    float allowance;
-    float deduction;
+    float basicPay, netSalary;
 };
 
 int main() {
     struct Employee emp[5];
 
-    // Input and process details for 5 employees
+    // Input details for 5 employees
     for (int i = 0; i < 5; i++) {
-        printf("Enter details for Employee %d (ID, Name, Basic Pay): ", i + 1);
-        scanf("%d %s %f", &emp[i].id, emp[i].name, &emp[i].basicPay);
+        printf("Enter Employee %d Name: ", i + 1);
+        scanf("%s", emp[i].name);
+        printf("Enter Basic Pay for %s: ", emp[i].name);
+        scanf("%f", &emp[i].basicPay);
 
-        // Calculate allowance and deduction
-        emp[i].allowance = emp[i].basicPay * (emp[i].basicPay < 20000 ? 0.20 : emp[i].basicPay <= 50000 ? 0.25 : 0.30);
-        emp[i].deduction = emp[i].basicPay * (emp[i].basicPay < 20000 ? 0.10 : emp[i].basicPay <= 50000 ? 0.15 : 0.20);
+        // Calculate net salary (20% allowance, 10% deduction)
+        emp[i].netSalary = emp[i].basicPay * 1.10;
     }
 
-    // Display employee details
+    // Display details of all employees
     printf("\nEmployee Details:\n");
     for (int i = 0; i < 5; i++) {
-        printf("\nEmployee %d:\n", i + 1);
-        printf("ID: %d\n", emp[i].id);
-        printf("Name: %s\n", emp[i].name);
-        printf("Basic Pay: %.2f\n", emp[i].basicPay);
-        printf("Allowance: %.2f\n", emp[i].allowance);
-        printf("Deduction: %.2f\n", emp[i].deduction);
-        printf("Net Salary: %.2f\n", emp[i].basicPay + emp[i].allowance - emp[i].deduction);
+        printf("Employee %d: %s\n", i + 1, emp[i].name);
+        printf("Net Salary: %.2f\n", emp[i].netSalary);
     }
 
     return 0;
