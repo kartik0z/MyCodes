@@ -20,19 +20,16 @@ int binarySearch(int arr[], int left, int right, int key) {
 int main() {
     int size;
 
-    // Prompt user for the size of the array
     printf("Enter the number of elements in the array: ");
     scanf("%d", &size);
 
     int arr[size];
 
-    // Prompt user to enter the elements of the array
     printf("Enter %d sorted elements:\n", size);
     for (int i = 0; i < size; i++) {
         scanf("%d", &arr[i]);
     }
 
-    // Prompt user for the key to search
     int key;
     printf("Enter the element to search for: ");
     scanf("%d", &key);
