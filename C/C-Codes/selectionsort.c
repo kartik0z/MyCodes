@@ -6,7 +6,6 @@ int main()
   int a[] = {5, 9, 7, 6, 4, 0, 2, 3, 8, 1};
   int length = 10;
   
-
   for (int i = 0; i < length - 1; i++)
   {
 
