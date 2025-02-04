@@ -56,6 +56,7 @@ int main(){
     node * HEAD = NULL;
     do{
         printf("<-----MENU----->\n1.Create a linked list.\n2.Enter a new node at the beginning.\n3.Display the list.\n4. Exit\n");
+        printf("Enter your choice: ");
         scanf("%d", &choice);
         switch(choice){
             case 1: printf("\n How many nodes: ");
