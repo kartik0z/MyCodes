@@ -43,7 +43,7 @@ void displayList(node * head){
     printf("NULL\n");
 }
 
-void insertAtBeginning(node **head, int value) {
+void insert_at_start(node **head, int value) {
     node *temp = (node*)malloc(sizeof(node));
     temp->data = value;
     temp->next = *head; 
@@ -65,7 +65,7 @@ int main(){
                 break;
             case 2: printf("Enter the value you wish to enter: ");
                     scanf("%d", &value);
-                    insertAtBeginning(&HEAD,value);
+                    insert_at_start(&HEAD,value);
                 break;
             case 3: displayList(HEAD);
                 break;
