@@ -54,17 +54,23 @@ int main(){
     int value, choice;
     int n = 0;
     node * HEAD = NULL;
-    printf("\n How many nodes: ");
-    scanf("%d", &n);
-
-    switch(choice){
-        case 1: HEAD = createLinkedlist(n);
-            break;
-        case 2: printf("Enter the value you wish to enter: ");
-                scanf("%d", &value);
-                insertAtBeginning(&HEAD,value);
-            break;
-        case 3: displayList(HEAD);
-    }
+    do{
+        printf("<-----MENU----->\n1.Create a linked list.\n2.Enter a new node at the beginning.\n3.Display the list.\n4. Exit\n");
+        scanf("%d", &choice);
+        switch(choice){
+            case 1: printf("\n How many nodes: ");
+                    scanf("%d", &n);
+                    HEAD = createLinkedlist(n);
+                break;
+            case 2: printf("Enter the value you wish to enter: ");
+                    scanf("%d", &value);
+                    insertAtBeginning(&HEAD,value);
+                break;
+            case 3: displayList(HEAD);
+                break;
+            case 4: return 0;
+                break;
+        }
+    }while(choice != 4);
     return 0;
 }
