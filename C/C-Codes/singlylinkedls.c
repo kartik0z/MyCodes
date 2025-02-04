@@ -36,20 +36,35 @@ node * createLinkedlist(int n){
 void displayList(node * head){
     node * p = head;
     printf("\nLinked List Elements:\n");
-    while(p != NULL){  // Fix the loop condition
+    while(p != NULL){
         printf("%d -> ", p -> data);
         p = p -> next;
     }
-    printf("NULL\n"); // End of list indicator
+    printf("NULL\n");
+}
+
+void insertAtBeginning(node **head, int value) {
+    node *temp = (node*)malloc(sizeof(node));
+    temp->data = value;
+    temp->next = *head; 
+    *head = temp;
 }
 
 int main(){
+    int value, choice;
     int n = 0;
     node * HEAD = NULL;
     printf("\n How many nodes: ");
     scanf("%d", &n);
 
-    HEAD=createLinkedlist(n);
-    displayList(HEAD);
+    switch(choice){
+        case 1: HEAD = createLinkedlist(n);
+            break;
+        case 2: printf("Enter the value you wish to enter: ");
+                scanf("%d", &value);
+                insertAtBeginning(&HEAD,value);
+            break;
+        case 3: displayList(HEAD);
+    }
     return 0;
 }
