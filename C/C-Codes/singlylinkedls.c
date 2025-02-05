@@ -50,12 +50,29 @@ void insert_at_start(node **head, int value) {
     *head = temp;
 }
 
+void insert_at_end(node **head, int value) {
+    node *temp = (node*)malloc(sizeof(node));
+    temp->data = value;
+    temp->next = NULL;
+
+    if (*head == NULL) {
+        *head = temp;
+        return;
+    }
+
+    node *p = *head;
+    while (p->next != NULL) {
+        p = p->next;
+    }
+    p->next = temp;
+}
+
 int main(){
     int value, choice;
     int n = 0;
     node * HEAD = NULL;
     do{
-        printf("<-----MENU----->\n1.Create a linked list.\n2.Enter a new node at the beginning.\n3.Display the list.\n4. Exit\n");
+        printf("<-----MENU----->\n1.Create a linked list.\n2.Enter a new node at the beginning.\n3.Value at the end\n4.Display the list.\n5. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
         switch(choice){
@@ -67,9 +84,13 @@ int main(){
                     scanf("%d", &value);
                     insert_at_start(&HEAD,value);
                 break;
-            case 3: displayList(HEAD);
+            case 3: printf("Enter the value you wish to add at the end: ");
+                    scanf("%d", &value);
+                    insert_at_end(&HEAD, value);
                 break;
-            case 4: return 0;
+            case 4: displayList(HEAD);
+                break;
+            case 5: return 0;
                 break;
         }
     }while(choice != 4);
