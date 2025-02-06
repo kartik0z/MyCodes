@@ -3,54 +3,40 @@
 
 typedef struct node{
     int data;
-    struct node * next;
-}node;
+    struct node *next;
+} node;
 
-node * createLinkedlist(int n){
-    int i = 0;
-    node * head = NULL;
-    node * temp = NULL;
-    node * p = NULL;
+node *createLinkedlist(int n) {
+    int i;
+    node *head = NULL, *temp = NULL, *p = NULL;
 
-    for(i=0; i<n; i++){
+    for (i = 0; i < n; i++) {
         temp = (node*)malloc(sizeof(node));
-        printf("Enter the data for node number %d: ", i+1);
+        printf("Enter data for node %d: ", i + 1);
         scanf("%d", &(temp->data));
+        temp->next = NULL;
 
-        temp -> next = NULL;
-
-        if(head==NULL){
-            head=temp;
-        }
-        else{
-            p=head;
-            while(p->next!=NULL){
-                p=p->next;
+        if (head == NULL) {
+            head = temp;
+        } else {
+            p = head;
+            while (p->next != NULL) {
+                p = p->next;
             }
-            p -> next = temp;
+            p->next = temp;
         }
     }
     return head;
 }
 
-void displayList(node * head){
-    node * p = head;
-    printf("\nLinked List Elements:\n");
-    while(p != NULL){
-        printf("%d -> ", p -> data);
-        p = p -> next;
-    }
-    printf("NULL\n");
-}
-
-void insert_at_start(node **head, int value) {
+void insert_At_Beginning(node **head, int value) {
     node *temp = (node*)malloc(sizeof(node));
     temp->data = value;
-    temp->next = *head; 
+    temp->next = *head;
     *head = temp;
 }
 
-void insert_at_end(node **head, int value) {
+void insert_At_End(node **head, int value) {
     node *temp = (node*)malloc(sizeof(node));
     temp->data = value;
     temp->next = NULL;
@@ -67,32 +53,84 @@ void insert_at_end(node **head, int value) {
     p->next = temp;
 }
 
-int main(){
-    int value, choice;
-    int n = 0;
-    node * HEAD = NULL;
-    do{
-        printf("<-----MENU----->\n1.Create a linked list.\n2.Enter a new node at the beginning.\n3.Value at the end\n4.Display the list.\n5. Exit\n");
-        printf("Enter your choice: ");
+void insert_At_Position(node **head, int value, int pos) {
+    node *temp = (node*)malloc(sizeof(node));
+    temp->data = value;
+
+    if (pos == 1) {
+        temp->next = *head;
+        *head = temp;
+        return;
+    }
+
+    node *p = *head;
+    for (int i = 1; i < pos - 1 && p != NULL; i++) {
+        p = p->next;
+    }
+
+    if (p == NULL) {
+        printf("Invalid position!\n");
+        free(temp);
+        return;
+    }
+
+    temp->next = p->next;
+    p->next = temp;
+}
+
+void displayList(node *head) {
+    node *p = head;
+    printf("\nLinked List: ");
+    while (p != NULL) {
+        printf("%d -> ", p->data);
+        p = p->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    int n, choice, value, pos;
+    node *HEAD = NULL;
+
+    printf("How many nodes: ");
+    scanf("%d", &n);
+    HEAD = createLinkedlist(n);
+    displayList(HEAD);
+
+    while (1) {
+        printf("\nMenu:\n1. Insert at Beginning\n2. Insert at End\n3. Insert at Position\n4. Display\n5. Exit\nEnter your choice: ");
         scanf("%d", &choice);
-        switch(choice){
-            case 1: printf("\n How many nodes: ");
-                    scanf("%d", &n);
-                    HEAD = createLinkedlist(n);
+
+        switch (choice) {
+            case 1:
+                printf("Enter value to insert at beginning: ");
+                scanf("%d", &value);
+                insert_At_Beginning(&HEAD, value);
                 break;
-            case 2: printf("Enter the value you wish to enter: ");
-                    scanf("%d", &value);
-                    insert_at_start(&HEAD,value);
+
+            case 2:
+                printf("Enter value to insert at end: ");
+                scanf("%d", &value);
+                insert_At_End(&HEAD, value);
                 break;
-            case 3: printf("Enter the value you wish to add at the end: ");
-                    scanf("%d", &value);
-                    insert_at_end(&HEAD, value);
+
+            case 3:
+                printf("Enter value and position: ");
+                scanf("%d %d", &value, &pos);
+                insert_At_Position(&HEAD, value, pos);
                 break;
-            case 4: displayList(HEAD);
+
+            case 4:
+                displayList(HEAD);
                 break;
-            case 5: return 0;
-                break;
+
+            case 5:
+                exit(0);
+
+            default:
+                printf("Invalid choice!\n");
         }
-    }while(choice != 4);
+    }
+
     return 0;
 }
