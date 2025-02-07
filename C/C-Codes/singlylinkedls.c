@@ -130,7 +130,7 @@ int main() {
             default:
                 printf("Invalid choice!\n");
         }
-    }while(choice != 5)
+    }while(choice != 5);
 
     return 0;
 }
