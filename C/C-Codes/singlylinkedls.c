@@ -97,7 +97,7 @@ int main() {
     HEAD = createLinkedlist(n);
     displayList(HEAD);
 
-    while (1) {
+    do{
         printf("\nMenu:\n1. Insert at Beginning\n2. Insert at End\n3. Insert at Position\n4. Display\n5. Exit\nEnter your choice: ");
         scanf("%d", &choice);
 
@@ -130,7 +130,7 @@ int main() {
             default:
                 printf("Invalid choice!\n");
         }
-    }
+    }while(choice != 5)
 
     return 0;
 }
