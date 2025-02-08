@@ -12,7 +12,7 @@ int linearSearch(int arr[], int n, int key) {
 
 int main() {
     int n, key;
-
+    int arr[50];
     printf("Enter the number of elements: ");
     scanf("%d", &n);
 
