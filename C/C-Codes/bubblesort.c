@@ -28,11 +28,13 @@ int main(){
     arr[length];
 
     printf("Enter elements for the array: ");
-    for(int i; i<length;i++){
+    for(int i=0; i<length;i++){
         scanf("%d", &arr[i]);
     }
 
     bubbleSort(arr, length);
 
     printingElements(arr, length);
+
+    return 0;
 }
