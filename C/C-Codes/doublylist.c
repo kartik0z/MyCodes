@@ -1,14 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Structure for a Doubly Linked List Node
 struct Node {
     int data;
     struct Node *prev;
     struct Node *next;
 };
 
-// Function prototypes
 void insertAtBeginning(struct Node **head, int data);
 void insertAtEnd(struct Node **head, int data);
 void insertAtPosition(struct Node **head, int data, int position);
@@ -19,11 +17,10 @@ void displayList(struct Node *head);
 void searchList(struct Node *head, int key);
 
 int main() {
-    struct Node *head = NULL; // Initialize the head of the list
+    struct Node *head = NULL;
     int choice, value, position;
 
     while (1) {
-        // Menu
         printf("\nDoubly Linked List Operations:\n");
         printf("1. Insert at Beginning\n");
         printf("2. Insert at End\n");
@@ -85,7 +82,6 @@ int main() {
     return 0;
 }
 
-// Function to insert at the beginning of the list
 void insertAtBeginning(struct Node **head, int data) {
     struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
     newNode->data = data;
@@ -100,7 +96,6 @@ void insertAtBeginning(struct Node **head, int data) {
     printf("Node inserted at the beginning.\n");
 }
 
-// Function to insert at the end of the list
 void insertAtEnd(struct Node **head, int data) {
     struct Node *newNode = (struct Node *)malloc(sizeof(struct Node));
     newNode->data = data;
@@ -123,7 +118,6 @@ void insertAtEnd(struct Node **head, int data) {
     printf("Node inserted at the end.\n");
 }
 
-// Function to insert at a specific position
 void insertAtPosition(struct Node **head, int data, int position) {
     if (position < 1) {
         printf("Invalid position!\n");
@@ -159,7 +153,6 @@ void insertAtPosition(struct Node **head, int data, int position) {
     printf("Node inserted at position %d.\n", position);
 }
 
-// Function to delete from the beginning of the list
 void deleteFromBeginning(struct Node **head) {
     if (*head == NULL) {
         printf("List is empty! Nothing to delete.\n");
@@ -177,7 +170,6 @@ void deleteFromBeginning(struct Node **head) {
     printf("Node deleted from the beginning.\n");
 }
 
-// Function to delete from the end of the list
 void deleteFromEnd(struct Node **head) {
     if (*head == NULL) {
         printf("List is empty! Nothing to delete.\n");
@@ -186,7 +178,7 @@ void deleteFromEnd(struct Node **head) {
 
     struct Node *temp = *head;
 
-    if (temp->next == NULL) { // Only one node
+    if (temp->next == NULL) {
         *head = NULL;
         free(temp);
         printf("Node deleted from the end.\n");
@@ -202,7 +194,6 @@ void deleteFromEnd(struct Node **head) {
     printf("Node deleted from the end.\n");
 }
 
-// Function to delete from a specific position
 void deleteFromPosition(struct Node **head, int position) {
     if (*head == NULL || position < 1) {
         printf("Invalid position or list is empty!\n");
@@ -241,7 +232,6 @@ void deleteFromPosition(struct Node **head, int position) {
     printf("Node deleted from position %d.\n", position);
 }
 
-// Function to display the list
 void displayList(struct Node *head) {
     if (head == NULL) {
         printf("List is empty!\n");
@@ -257,7 +247,6 @@ void displayList(struct Node *head) {
     printf("NULL\n");
 }
 
-// Function to search for a value in the list
 void searchList(struct Node *head, int key) {
     if (head == NULL) {
         printf("List is empty!\n");
