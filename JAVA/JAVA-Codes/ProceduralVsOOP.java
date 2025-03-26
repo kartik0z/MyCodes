@@ -67,5 +67,7 @@ public class ProceduralVsOOP {
 
         System.out.println("Area of Rectangle: " + rect.calculateArea());
         System.out.println("Area of Circle: " + circ.calculateArea());
+
+        scanner.close();
     }
 }

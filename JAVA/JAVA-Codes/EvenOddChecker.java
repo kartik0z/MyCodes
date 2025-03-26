@@ -22,5 +22,6 @@ public class EvenOddChecker {
                 System.out.print(i + " ");
             }
         }
+        scanner.close();
     }
 }
