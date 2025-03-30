@@ -15,12 +15,6 @@ struct Stack* createStack(int cap) {
     return stack;
 }
 
-// Function to delete a stack
-void deleteStack(struct Stack* stack) {
-    free(stack->a);
-    free(stack);
-}
-
 // Function to check if stack is full
 int isFull(struct Stack* stack) {
     return stack->top >= stack->cap - 1;
@@ -50,15 +44,6 @@ void pop(struct Stack* stack) {
     printf("Popped: %d\n", stack->a[stack->top--]);
 }
 
-// Function to peek at the top element
-void peek(struct Stack* stack) {
-    if (isEmpty(stack)) {
-        printf("Stack is empty!\n");
-        return;
-    }
-    printf("Top element: %d\n", stack->a[stack->top]);
-}
-
 // Function to display all elements in stack
 void display(struct Stack* stack) {
     if (isEmpty(stack)) {
@@ -85,9 +70,8 @@ int main() {
         printf("\nMenu:\n");
         printf("1. Push\n");
         printf("2. Pop\n");
-        printf("3. Peek\n");
-        printf("4. Display\n");
-        printf("5. Exit\n");
+        printf("3. Display\n");
+        printf("4. Exit\n");
         printf("Enter choice: ");
         scanf("%d", &choice);
 
@@ -103,12 +87,10 @@ int main() {
             case 3:
                 peek(stack);
                 break;
-            case 4:
+            case 3:
                 display(stack);
                 break;
-            case 5:
-                deleteStack(stack);
-                printf("Exiting...\n");
+            case 4:
                 return 0;
             default:
                 printf("Invalid choice! Try again.\n");
