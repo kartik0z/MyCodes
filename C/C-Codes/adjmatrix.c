@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define MAX 10
+#define MAX 5
 
 void initializeMatrix(int matrix[MAX][MAX], int vertices) {
     for (int i = 0; i < vertices; i++) {
