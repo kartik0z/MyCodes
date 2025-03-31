@@ -20,7 +20,7 @@ void inputEdges(int matrix[MAX][MAX], int vertices, int edges) {
             i--;
         } else {
             matrix[src][dest] = 1;
-            matrix[dest][src] = 1; // For undirected graph
+            matrix[dest][src] = 1;
         }
     }
 }
