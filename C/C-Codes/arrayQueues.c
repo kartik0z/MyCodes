@@ -3,37 +3,32 @@
 
 #define MAX_SIZE 100
 
-// Structure to represent a queue using arrays
 struct Queue {
     int front, rear, size;
     int array[MAX_SIZE];
 };
 
-// Function to initialize the queue
 void initializeQueue(struct Queue* queue) {
     queue->front = -1;
     queue->rear = -1;
     queue->size = 0;
 }
 
-// Function to check if the queue is full
 int isFull(struct Queue* queue) {
     return (queue->size == MAX_SIZE);
 }
 
-// Function to check if the queue is empty
 int isEmpty(struct Queue* queue) {
     return (queue->size == 0);
 }
 
-// Function to add an element to the queue (Enqueue)
 void enqueue(struct Queue* queue, int item) {
     if (isFull(queue)) {
         printf("Queue is full. Cannot enqueue %d\n", item);
         return;
     }
     if (queue->front == -1) {
-        queue->front = 0; // First element added
+        queue->front = 0; 
     }
     queue->rear++;
     queue->array[queue->rear] = item;
@@ -41,7 +36,6 @@ void enqueue(struct Queue* queue, int item) {
     printf("%d enqueued to queue\n", item);
 }
 
-// Function to remove an element from the queue (Dequeue)
 int dequeue(struct Queue* queue) {
     if (isEmpty(queue)) {
         printf("Queue is empty. Cannot dequeue.\n");
@@ -58,25 +52,6 @@ int dequeue(struct Queue* queue) {
     return item;
 }
 
-// Function to get the front element
-int front(struct Queue* queue) {
-    if (isEmpty(queue)) {
-        printf("Queue is empty.\n");
-        return -1;
-    }
-    return queue->array[queue->front];
-}
-
-// Function to get the rear element
-int rear(struct Queue* queue) {
-    if (isEmpty(queue)) {
-        printf("Queue is empty.\n");
-        return -1;
-    }
-    return queue->array[queue->rear];
-}
-
-// Function to display the queue elements
 void displayQueue(struct Queue* queue) {
     if (isEmpty(queue)) {
         printf("Queue is empty.\n");
