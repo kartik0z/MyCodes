@@ -9,7 +9,6 @@ typedef struct Node {
 
 Node *head = NULL;
 
-// Function to create a new node
 Node* createNode(int value) {
     Node *newNode = (Node *)malloc(sizeof(Node));
     newNode->data = value;
@@ -17,7 +16,6 @@ Node* createNode(int value) {
     return newNode;
 }
 
-// Function to insert at the beginning
 void insertAtBeginning(int value) {
     Node *newNode = createNode(value);
     if (head == NULL) {
@@ -35,7 +33,6 @@ void insertAtBeginning(int value) {
     printf("Inserted at beginning: %d\n", value);
 }
 
-// Function to insert at the end
 void insertAtEnd(int value) {
     Node *newNode = createNode(value);
     if (head == NULL) {
@@ -52,7 +49,6 @@ void insertAtEnd(int value) {
     printf("Inserted at end: %d\n", value);
 }
 
-// Function to insert at a specific position
 void insertAtPosition(int value, int position) {
     if (position == 1) {
         insertAtBeginning(value);
@@ -68,7 +64,6 @@ void insertAtPosition(int value, int position) {
     printf("Inserted at position %d: %d\n", position, value);
 }
 
-// Function to delete from the beginning
 void deleteAtBeginning() {
     if (head == NULL) {
         printf("List is empty!\n");
@@ -89,7 +84,6 @@ void deleteAtBeginning() {
     printf("Deleted from beginning\n");
 }
 
-// Function to delete from the end
 void deleteAtEnd() {
     if (head == NULL) {
         printf("List is empty!\n");
@@ -110,7 +104,6 @@ void deleteAtEnd() {
     printf("Deleted from end\n");
 }
 
-// Function to delete from a specific position
 void deleteAtPosition(int position) {
     if (head == NULL) {
         printf("List is empty!\n");
@@ -134,7 +127,6 @@ void deleteAtPosition(int position) {
     }
 }
 
-// Function to display the list
 void display() {
     if (head == NULL) {
         printf("List is empty!\n");
