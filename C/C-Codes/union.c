@@ -21,6 +21,5 @@ int main() {
 
     // Note: Printing data.i or data.f here would give unexpected results
     // since data.str overwrites their memory space.
-
     return 0;
 }
