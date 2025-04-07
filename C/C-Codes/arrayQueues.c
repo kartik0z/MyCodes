@@ -74,10 +74,8 @@ int main() {
         printf("\nQueue Operations:");
         printf("\n1. Enqueue");
         printf("\n2. Dequeue");
-        printf("\n3. Display Front");
-        printf("\n4. Display Rear");
-        printf("\n5. Display Queue");
-        printf("\n6. Exit");
+        printf("\n3. Display Queue");
+        printf("\n4. Exit");
         printf("\nEnter your choice: ");
         scanf("%d", &choice);
 
@@ -90,16 +88,9 @@ int main() {
             case 2:
                 dequeue(&queue);
                 break;
-            case 3:
-                printf("Front item is: %d\n", front(&queue));
+            case 3:displayQueue(&queue);
                 break;
             case 4:
-                printf("Rear item is: %d\n", rear(&queue));
-                break;
-            case 5:
-                displayQueue(&queue);
-                break;
-            case 6:
                 printf("Exiting the program.\n");
                 exit(0);
             default:
