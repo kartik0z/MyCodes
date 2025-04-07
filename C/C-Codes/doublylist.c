@@ -20,7 +20,7 @@ void displayList(Node *head);
 void searchList(Node *head, int key);
 
 int main() {
-    Node *head = NULL; // Initialize the head of the list
+    Node *head = NULL;
     int choice, value, position;
 
     while (1) {
