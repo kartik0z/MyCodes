@@ -71,8 +71,7 @@ void merge_sorted_arrays(int a[], int l, int m, int r)
   }
   for (i = 0, j = 0, k = l; k <= r; k++)
   {
-    if ((i < left_length) &&
-        (j >= right_length || temp_left[i] <= temp_right[j]))
+    if ((i < left_length) && (j >= right_length || temp_left[i] <= temp_right[j]))
     {
       a[k] = temp_left[i];
       i++;
