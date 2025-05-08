@@ -6,7 +6,7 @@ void merge_sorted_arrays(int a[], int l, int m, int r);
 
 int main()
 {
-  int array[50];
+  int array[10];
   int length;
 
     printf("Enter number of elements for the array(1-50): ");
