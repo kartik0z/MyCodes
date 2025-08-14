@@ -18,13 +18,10 @@ echo "Modulus: " . ($num1 % $num2) . "<br><br>";
 $x = 5;
 $x += 3;
 echo "After += : " . $x . "<br>";
-
 $x -= 2;
 echo "After -= : " . $x . "<br>";
-
 $x *= 4;
 echo "After *= : " . $x . "<br>";
-
 $x /= 2;
 echo "After /= : " . $x . "<br><br>";
 
@@ -42,10 +39,9 @@ echo "Pre-decrement --z: " . --$z . "<br><br>";
 
 $str1 = "Hello";
 $str2 = "World";
-
 $result = $str1 . " " . $str2;
-echo "Concatenation (.) : " . $result . "<br>";
 
+echo "Concatenation (.) : " . $result . "<br>";
 $str1 .= " PHP";
 echo "After . assignment: " . $str1 . "<br>";
 ?>
