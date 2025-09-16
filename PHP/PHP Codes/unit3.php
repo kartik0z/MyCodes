@@ -1,187 +1,181 @@
 <?php
-declare(strict_types=1);
+
+//==================================================
+// UNIT-II: PHP Core Concepts & State Management
+//==================================================
+
+/*--------------------------------------------------
+ | 1. Core PHP Concepts
+ *-------------------------------------------------*/
 
 /**
- * -----------------------------
- * Error reporting (development)
- * -----------------------------
+ * @section 1.1 Variable Scope
+ * Defines where a variable can be accessed.
  */
-error_reporting(E_ALL);          // Report all errors
-ini_set('display_errors', '1');  // Show errors on screen (disable in production)
-ini_set('log_errors', '1');      // Log errors to server logs
-// error_log('Custom log entry'); // Example manual log
 
-/**
- * -----------------------------
- * Variable scope demonstration
- * -----------------------------
- * - global: defined outside functions; use `global $var` inside to access
- * - local: defined inside a function; only visible there
- * - static: retains value across function calls
- */
-$globalVar = 'I am global';
+$global_var = "I am outside any function."; // Global scope
 
-function scope_demo(): array {
-    $localVar = 'I am local';
-    global $globalVar;            // Access global inside function
-    static $counter = 0;          // Static retains value
-    $counter++;
-    return [$localVar, $globalVar, $counter];
-}
-list($local, $global, $count1) = scope_demo();
-list($_,     $_g2,   $count2) = scope_demo();
+function myFunction() {
+    $local_var = "I am inside a function."; // Local scope
+    echo $local_var; // Accessible here
 
-/**
- * -----------------------------
- * Sessions (application state)
- * -----------------------------
- * Must be called before any output
- */
-session_start(); // Start/resume per-user session
-
-// Initialize/advance a session counter
-$_SESSION['visits'] = ($_SESSION['visits'] ?? 0) + 1;
-
-// Store some session state
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = ['items' => [], 'total' => 0];
+    // To access a global variable, use the 'global' keyword
+    global $global_var;
+    echo $global_var;
 }
 
-/**
- * -----------------------------
- * Cookies (client-side state)
- * -----------------------------
- * Must be sent before any output (they are HTTP headers)
- * Secure flags: secure (HTTPS only) and httponly (not accessible to JS)
- */
-setcookie(
-    'theme',
-    'light',
-    [
-        'expires'  => time() + 86400 * 30,   // 30 days
-        'path'     => '/',
-        'secure'   => isset($_SERVER['HTTPS']),
-        'httponly' => true,
-        'samesite' => 'Lax'
-    ]
-);
+// echo $local_var; // This would cause an error (undefined variable)
+
 
 /**
- * -----------------------------
- * Simple mail() example
- * -----------------------------
- * Will only succeed if the server has a working mail transport configured
+ * @section 1.2 Mail Function
+ * A built-in function to send emails from a PHP script.
+ * Syntax: mail(to, subject, message, [headers], [parameters]);
  */
-// Uncomment to test in a properly configured environment
-// $sent = mail('someone@example.com', 'Test Subject', "Hello from PHP.\n");
-// if (!$sent) { error_log('mail() failed'); }
 
-/**
- * -----------------------------
- * Start of HTML (no output before this point for sessions/cookies)
- * -----------------------------
- */
-?>
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>PHP Notes: Forms, State, Scope, Mail, Errors</title>
-  <style>
-    body { font-family: system-ui, sans-serif; margin: 2rem; }
-    pre { background: #f6f8fa; padding: 1rem; overflow:auto; }
-    fieldset { margin-bottom: 1.25rem; }
-    label { display: inline-block; margin-right: .75rem; }
-  </style>
-</head>
-<body>
+/*
+$to = 'recipient@example.com';
+$subject = 'Test Email from PHP';
+$message = 'Hello! This is a test email.';
+$headers = 'From: webmaster@example.com';
 
-<h2>Query string (GET)</h2>
-<p>
-  <a href="?q=php&ref=notes&n=2">Click to add a query string</a>
-</p>
-<?php
-// $_GET comes from URL parameters ?key=value
-if (!empty($_GET)) {
-    echo '<pre>$_GET = ' . htmlspecialchars(print_r($_GET, true)) . '</pre>';
+if (mail($to, $subject, $message, $headers)) {
+    echo "Email sent successfully!";
+} else {
+    echo "Email sending failed.";
 }
-?>
+*/
 
-<h2>POST form controls</h2>
-<form method="post" action="">
-  <fieldset>
-    <legend>Text inputs</legend>
-    <label>Full name <input type="text" name="name" required></label>
-    <label>Email <input type="email" name="email"></label>
-    <input type="hidden" name="hidden_token" value="<?php echo bin2hex(random_bytes(8)); ?>">
-  </fieldset>
 
-  <fieldset>
-    <legend>Choices</legend>
-    <label><input type="checkbox" name="skills[]" value="php"> PHP</label>
-    <label><input type="checkbox" name="skills[]" value="html"> HTML</label>
-    <label><input type="checkbox" name="skills[]" value="css"> CSS</label>
+/**
+ * @section 1.3 PHP Errors
+ * Different levels of errors in PHP scripts.
+ * error_reporting() can be used to set the level of error logging.
+ */
 
-    <label><input type="radio" name="role" value="user" checked> User</label>
-    <label><input type="radio" name="role" value="admin"> Admin</label>
+// E_NOTICE: Non-critical issue, e.g., using an undefined variable. Script continues.
+// E_WARNING: A non-fatal error. Script continues but indicates a problem.
+// E_ERROR (Fatal Error): A critical error that halts script execution.
 
-    <label>City
-      <select name="city">
-        <option value="delhi">Delhi</option>
-        <option value="mumbai">Mumbai</option>
-        <option value="pune">Pune</option>
-      </select>
-    </label>
-  </fieldset>
 
-  <button type="submit" name="submit" value="1">Submit POST</button>
+/*--------------------------------------------------
+ | 2. Working with Forms
+ *-------------------------------------------------*/
+
+/**
+ * @section 2.1 GET and POST Methods
+ * Methods to send user-submitted data to a server.
+ *
+ * <form action="process.php" method="POST">
+ * <input type="text" name="username">
+ * <input type="submit">
+ * </form>
+ */
+
+// GET Method:
+// - Appends data to the URL (e.g., page.php?name=value).
+// - Visible, limited in size, good for bookmarks/search.
+// - Data is accessed via the $_GET superglobal array.
+$username_get = $_GET['username'] ?? 'guest';
+
+// POST Method:
+// - Sends data in the HTTP request body.
+// - Not visible in the URL, no size limit.
+// - More secure for sensitive data (passwords, etc.).
+// - Data is accessed via the $_POST superglobal array.
+$username_post = $_POST['username'] ?? 'guest';
+
+
+/**
+ * @section 2.2 HTML Form Controls
+ * Elements used to collect user input.
+ */
+/*
+<input type="text" name="name">
+<input type="password" name="pwd">
+<textarea name="comment"></textarea>
+
+<input type="radio" name="gender" value="male">
+<input type="checkbox" name="vehicle" value="Car">
+<select name="city">
+  <option value="delhi">Delhi</option>
+</select>
+
+<input type="submit" value="Submit">
+<input type="reset" value="Clear">
+<button type="button">Click Me</button>
+*/
+
+
+/*--------------------------------------------------
+ | 3. PHP State Management
+ | HTTP is stateless. These techniques help maintain user data across multiple pages.
+ *-------------------------------------------------*/
+
+/**
+ * @section 3.1 Cookies
+ * A small file the server embeds on the user's computer.
+ */
+// Setting a cookie (name, value, expiration_time, path)
+setcookie("user", "JohnDoe", time() + (86400 * 30), "/"); // Expires in 30 days
+
+// Accessing a cookie
+if (isset($_COOKIE["user"])) {
+    echo "Welcome back, " . $_COOKIE["user"];
+}
+
+
+/**
+ * @section 3.2 Sessions
+ * Stores information on the server, linked by a unique session ID (often stored in a cookie).
+ * More secure than cookies for sensitive data.
+ */
+// Must be at the top of the script
+session_start();
+
+// Storing session data
+$_SESSION['user_id'] = 123;
+$_SESSION['username'] = "admin";
+
+// Accessing session data
+if (isset($_SESSION['username'])) {
+    echo "Hello, " . $_SESSION['username'];
+}
+
+// Destroying a session
+// session_unset();    // Remove all session variables
+// session_destroy();  // Destroy the session
+
+
+/**
+ * @section 3.3 Application State
+ * Data/state that is shared across the entire application for all users.
+ * Often managed via databases, configuration files, or server-side caching.
+ */
+
+
+/**
+ * @section 3.4 Query String
+ * Part of a URL containing data, starting with a "?".
+ * Example: https://example.com/search.php?product=laptop&page=2
+ */
+// The data is accessed using the $_GET array.
+$product = $_GET['product']; // "laptop"
+$page = $_GET['page'];       // "2"
+
+
+/**
+ * @section 3.5 Hidden Field
+ * A form input that is not visible to the user.
+ * Used to pass data that shouldn't be changed by the user.
+ */
+/*
+<form action="update.php" method="POST">
+    <input type="hidden" name="user_id" value="101">
+    <input type="text" name="email">
+    <input type="submit">
 </form>
+*/
+// In update.php, the user_id can be accessed via $_POST['user_id']
 
-<?php
-// $_POST collects form data sent in the HTTP request body
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Safely read values
-    $name   = $_POST['name']   ?? '';
-    $email  = $_POST['email']  ?? '';
-    $skills = $_POST['skills'] ?? [];
-    $role   = $_POST['role']   ?? '';
-    $city   = $_POST['city']   ?? '';
-    $token  = $_POST['hidden_token'] ?? '';
-
-    echo '<pre>';
-    echo "name: "   . htmlspecialchars($name) . "\n";
-    echo "email: "  . htmlspecialchars($email) . "\n";
-    echo "skills: " . htmlspecialchars(implode(',', $skills)) . "\n";
-    echo "role: "   . htmlspecialchars($role) . "\n";
-    echo "city: "   . htmlspecialchars($city) . "\n";
-    echo "hidden_token: " . htmlspecialchars($token) . "\n";
-    echo "</pre>";
-}
 ?>
-
-<h2>Session and cookie</h2>
-<?php
-echo '<pre>';
-echo "session visits: " . (int)$_SESSION['visits'] . "\n";
-echo "cookie theme: " . htmlspecialchars($_COOKIE['theme'] ?? 'not set') . "\n";
-echo "</pre>";
-?>
-
-<h2>Scope demo (global/local/static)</h2>
-<?php
-echo '<pre>';
-echo "local: $local\n";
-echo "global in function: $global\n";
-echo "static counter call #1: $count1, call #2: $count2\n";
-echo "</pre>";
-?>
-
-<h2>Quick tips</h2>
-<ul>
-  <li>Use htmlspecialchars() when echoing user input to prevent XSS.</li>
-  <li>Validate server-side regardless of form attributes like required or type=email.</li>
-  <li>Prefer prepared statements (PDO/MySQLi) for DB operations to avoid SQL injection.</li>
-</ul>
-
-</body>
-</html>
