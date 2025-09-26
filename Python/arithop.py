@@ -1,0 +1,21 @@
+# prob1.py
+a = int(input("Enter first integer: "))
+b = int(input("Enter second integer: "))
+x = float(input("Enter first float: "))
+y = float(input("Enter second float: "))
+
+print("Addition ints:", a + b)
+print("Subtraction ints:", a - b)
+print("Multiplication ints:", a * b)
+print("Integer division ints:", a // b if b != 0 else "undefined (div by 0)")
+print("True division ints:", a / b if b != 0 else "undefined (div by 0)")
+print("Modulus ints:", a % b if b != 0 else "undefined (div by 0)")
+print("Power ints:", a ** b)
+
+print("--- floats ---")
+print("Addition floats:", x + y)
+print("Subtraction floats:", x - y)
+print("Multiplication floats:", x * y)
+print("Division floats:", x / y if y != 0 else "undefined (div by 0)")
+print("Modulus floats:", x % y if y != 0 else "undefined (div by 0)")
+print("Power floats:", x ** y)
