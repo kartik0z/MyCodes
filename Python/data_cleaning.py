@@ -1,8 +1,7 @@
 import pandas as pd
 import numpy as np
 
-
-
+df = pd.read_csv('users.csv')
 def clean_data(df):
     """
     Cleans the input DataFrame by handling missing values, removing duplicates,
@@ -29,3 +28,6 @@ def clean_data(df):
         df[col].fillna(df[col].mode()[0], inplace=True)
     
     return df
+
+cleaned_df = clean_data(df)
+cleaned_df.to_csv('cleaned_users.csv', index=False)
